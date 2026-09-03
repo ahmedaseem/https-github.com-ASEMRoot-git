@@ -1,0 +1,13 @@
+export const CONFIG = {
+  mode: "demo",        // أو api
+  demoDelay: 1000,
+  timeout: 5000,
+  api: {
+    demo: "...",
+    real: "...",
+  },
+  storage: {
+    theme: "light",
+    language: "en"
+  }
+}

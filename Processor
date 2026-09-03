@@ -1,0 +1,101 @@
+@Module({
+
+    imports: [
+
+        BullModule.registerQueue({
+
+            name: SEARCH_QUEUE,
+
+        }),
+
+    ],
+
+    providers: [
+
+        SearchQueueService,
+
+        SearchProcessor,
+
+    ],
+
+    exports: [
+
+        SearchQueueService,
+
+    ],
+
+})
+export class SearchQueueModule {}
+constructor(
+
+   private readonly usersService: UsersService,
+
+   private readonly mapper: UserSearchMapper,
+
+   private readonly elastic: ElasticService,
+
+) {}
+@Processor(SEARCH_QUEUE)
+export class SearchProcessor extends WorkerHost {
+
+    constructor(
+
+        private readonly usersService: UsersService,
+
+        private readonly mapper: UserSearchMapper,
+
+        private readonly elastic: ElasticService,
+
+    ) {
+        super();
+    }
+
+    async process(job: Job<any>) {
+
+        switch (job.name) {
+
+            case SearchJobs.INDEX_USER:
+
+                await this.indexUser(job.data.id);
+
+                break;
+
+            case SearchJobs.UPDATE_USER:
+
+                await this.indexUser(job.data.id);
+
+                break;
+
+            case SearchJobs.DELETE_USER:
+
+                await this.deleteUser(job.data.id);
+
+                break;
+
+        }
+
+    }
+
+    private async indexUser(id: string) {
+
+        const user = await this.usersService.findById(id);
+
+        if (!user) {
+
+            return;
+
+        }
+
+        const document = this.mapper.toDocument(user);
+
+        await this.elastic.indexUser(document);
+
+    }
+
+    private async deleteUser(id: string) {
+
+        await this.elastic.deleteUser(id);
+
+    }
+
+}

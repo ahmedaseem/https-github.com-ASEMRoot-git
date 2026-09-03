@@ -1,0 +1,14 @@
+{
+  viewer {
+    followers(first: 10) {
+      nodes {
+        login
+        followers(first: 10) {
+          nodes {
+            login
+          }
+        }
+      }
+    }
+  }
+}

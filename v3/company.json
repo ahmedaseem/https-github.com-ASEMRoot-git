@@ -1,0 +1,8 @@
+server {
+    listen 443 ssl;
+    server_name example.com;
+
+    ssl_certificate /path/certificate.crt;
+    ssl_certificate_key /path/private.key;
+    ssl_trusted_certificate /path/ca_bundle.crt;
+}

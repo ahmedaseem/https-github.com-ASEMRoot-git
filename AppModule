@@ -1,0 +1,10 @@
+import { CacheController } from './modules/cache/cache.controller';
+
+@Module({
+  imports: [
+    // modules...
+  ],
+  controllers: [CacheController],
+})
+export class AppModule {}
+

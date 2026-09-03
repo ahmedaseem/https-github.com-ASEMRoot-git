@@ -1,0 +1,8 @@
+query {
+  node(id:"MDQ6VXNlcjU4MzIzMQ==") {
+   ... on User {
+      name
+      login
+    }
+  }
+}

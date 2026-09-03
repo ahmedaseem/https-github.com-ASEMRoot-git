@@ -1,0 +1,168 @@
+function buildUnifiedResultCard(item) {
+
+    const type =
+        item.type || "project";
+
+
+    const name =
+        item.name ||
+        item.title ||
+        "ASEM Platform Result";
+
+
+    const description =
+        item.description ||
+        "Discover this ASEM platform result.";
+
+
+    const category =
+        item.category ||
+        type;
+
+
+    const image =
+        item.image ||
+        item.logo ||
+        item.cover_image ||
+        "";
+
+
+    const hasGPS =
+        Number.isFinite(
+            Number(item.latitude)
+        ) &&
+        Number.isFinite(
+            Number(item.longitude)
+        );
+
+
+    return `
+        <article
+            class="card platform-result-card"
+            role="button"
+            tabindex="0"
+
+            data-result-type="${escapeHTML(type)}"
+
+            data-id="${escapeHTML(
+                item.id || ""
+            )}"
+
+            data-lat="${escapeHTML(
+                item.latitude || ""
+            )}"
+
+            data-lon="${escapeHTML(
+                item.longitude || ""
+            )}"
+        >
+
+            ${
+                image
+                ? `
+                    <img
+                        src="${escapeHTML(image)}"
+                        alt="${escapeHTML(name)}"
+                        class="platform-card-image"
+                        loading="lazy"
+                    >
+                `
+                : `
+                    <div
+                        class="platform-card-icon"
+                        aria-hidden="true">
+                        ${
+                            type === "tourism"
+                            ? "🏝️"
+                            : type === "business"
+                            ? "🌍"
+                            : type === "product"
+                            ? "🛒"
+                            : "🚀"
+                        }
+                    </div>
+                `
+            }
+
+
+            <div class="platform-card-content">
+
+                <span
+                    class="platform-card-category">
+                    ${escapeHTML(category)}
+                </span>
+
+
+                <h3>
+                    ${escapeHTML(name)}
+                </h3>
+
+
+                <p>
+                    ${escapeHTML(description)}
+                </p>
+
+
+                ${
+                    item.address ||
+                    item.location
+                    ? `
+                        <small>
+                            📍
+                            ${escapeHTML(
+                                item.address ||
+                                item.location
+                            )}
+                        </small>
+                    `
+                    : ""
+                }
+
+
+                ${
+                    item.rating !== undefined
+                    ? `
+                        <div class="platform-rating">
+                            ⭐
+                            ${escapeHTML(item.rating)}
+                        </div>
+                    `
+                    : ""
+                }
+
+
+                ${
+                    item.price !== undefined
+                    ? `
+                        <strong class="product-price">
+                            ${escapeHTML(item.price)}
+                            ${escapeHTML(
+                                item.currency ||
+                                "USD"
+                            )}
+                        </strong>
+                    `
+                    : ""
+                }
+
+
+                ${
+                    hasGPS
+                    ? `
+                        <button
+                            type="button"
+                            class="btn"
+                            data-open-map
+                        >
+                            📍 Open map
+                        </button>
+                    `
+                    : ""
+                }
+
+            </div>
+
+        </article>
+    `;
+}
+

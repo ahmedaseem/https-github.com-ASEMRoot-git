@@ -1,0 +1,21 @@
+def build_reply(text: str) -> str:
+    info = detect_lang(text)
+
+    lang = info["language"]
+    conf = info["confidence"]
+
+    if lang == "unknown":
+        return "لم أستطع التعرف على اللغة."
+
+    base_msg = f"تم التعرف على اللغة: {lang} بنسبة ثقة: {conf:.2%}"
+
+    replies = {
+        "ar": base_msg + " — الرد بالعربية.",
+        "en": base_msg + " — replying in English.",
+        "fr": base_msg + " — réponse en français.",
+    }
+
+    return replies.get(
+        lang,
+        base_msg + " — لا يوجد رد مخصص لهذه اللغة."
+    )

@@ -1,0 +1,14 @@
+mutation {
+  createIssue(
+    input: {
+      repositoryId: "MDEwOlJlcG9zaXRvcnkxMzAwMTky"
+      title: "Bug with feature X"
+      body: "If you do A, then B happens"}
+  ) {
+    issue {
+      number
+      url
+    }
+  }
+}
+

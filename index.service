@@ -1,0 +1,28 @@
+// src/search/indexer/index.service.js
+
+
+const engine =
+require("../engine/memory.adapter");
+
+
+
+exports.indexUser =
+async(user)=>{
+
+
+await engine.index({
+
+id:user._id.toString(),
+
+type:"USER",
+
+title:user.name,
+
+email:user.email,
+
+createdAt:user.createdAt
+
+});
+
+
+};

@@ -1,0 +1,51 @@
+{
+  "source": "ASEM Global Platform",
+  "version": "1.0",
+  "cities": [
+    {
+      "country_code": "FR",
+      "name": "Paris",
+      "code": "PAR",
+      "description": "Capital city of France and a major global center for culture, tourism, business and technology.",
+      "image": "assets/cities/paris.jpg",
+      "latitude": 48.8566,
+      "longitude": 2.3522,
+      "population": 2102650,
+      "is_active": true
+    },
+    {
+      "country_code": "EG",
+      "name": "Cairo",
+      "code": "CAI",
+      "description": "Capital of Egypt and one of the largest cultural and economic centers in Africa and the Middle East.",
+      "image": "assets/cities/cairo.jpg",
+      "latitude": 30.0444,
+      "longitude": 31.2357,
+      "population": 10230350,
+      "is_active": true
+    },
+    {
+      "country_code": "JP",
+      "name": "Tokyo",
+      "code": "TYO",
+      "description": "A leading global city known for technology, business, culture and innovation.",
+      "image": "assets/cities/tokyo.jpg",
+      "latitude": 35.6762,
+      "longitude": 139.6503,
+      "population": 14094034,
+      "is_active": true
+    },
+    {
+      "country_code": "US",
+      "name": "New York City",
+      "code": "NYC",
+      "description": "A major global center for finance, technology, culture, media and international business.",
+      "image": "assets/cities/new-york.jpg",
+      "latitude": 40.7128,
+      "longitude": -74.0060,
+      "population": 8336817,
+      "is_active": true
+    
+        }
+    }
+}

@@ -1,0 +1,2039 @@
+"use strict";
+
+/*
+ * ============================================================
+ * ASEM DIGITAL SOLUTIONS
+ * GLOBAL PLATFORM CONTROLLER
+ * ============================================================
+ *
+ * Compatible with:
+ *
+ *  data-platform-action="tourism"
+ *  data-platform-action="businesses"
+ *  data-platform-action="products"
+ *
+ * AND legacy:
+ *
+ *  data-section="tourism-results"
+ *  data-section="businesses-results"
+ *  data-section="products-results"
+ *
+ * Main goals:
+ *
+ *  - Restore all clickable platform cards
+ *  - Keep API integration intact
+ *  - Keep projects working
+ *  - Keep tourism working
+ *  - Keep businesses working
+ *  - Keep products working
+ *  - Keep theme toggle working
+ *  - Keep language selector working
+ *  - Keep search working
+ *  - Keep scroll-to-top working
+ *  - Support old and new HTML simultaneously
+ *
+ * ============================================================
+ */
+
+(() => {
+
+    const ASEM = {
+
+        api: {
+            tourism: "tourism.json",
+            businesses: "businesses.json",
+            products: "products.json",
+            projects: "projects.json"
+        },
+
+        storage: {
+            theme: "asem-theme",
+            language: "asem-language"
+        },
+
+        timeout: 15000
+    };
+
+
+    /* =========================================================
+       DOM HELPERS
+       ========================================================= */
+
+    const $ = (selector, root = document) =>
+        root.querySelector(selector);
+
+
+    const $$ = (selector, root = document) =>
+        Array.from(root.querySelectorAll(selector));
+
+
+    const escapeHTML = value => {
+
+        if (value === null || value === undefined) {
+            return "";
+        }
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    };
+
+
+    const normalizeArray = data => {
+
+        if (Array.isArray(data)) {
+            return data;
+        }
+
+        if (!data || typeof data !== "object") {
+            return [];
+        }
+
+        const keys = [
+            "data",
+            "items",
+            "results",
+            "tourism",
+            "businesses",
+            "products",
+            "projects"
+        ];
+
+        for (const key of keys) {
+
+            if (Array.isArray(data[key])) {
+                return data[key];
+            }
+        }
+
+        return [];
+    };
+
+
+    /* =========================================================
+       SECTION NAVIGATION
+       ========================================================= */
+
+    function openPageSection(id) {
+
+        const section = document.getElementById(id);
+
+        if (!section) {
+
+            console.warn(
+                "ASEM: section not found:",
+                id
+            );
+
+            return false;
+        }
+
+        section.hidden = false;
+
+        section.removeAttribute("aria-hidden");
+
+        requestAnimationFrame(() => {
+
+            section.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        });
+
+        return true;
+    }
+
+
+    function hideSection(id) {
+
+        const section = document.getElementById(id);
+
+        if (!section) {
+            return;
+        }
+
+        section.hidden = true;
+
+        section.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+    }
+
+
+    /* =========================================================
+       API
+       ========================================================= */
+
+    async function apiRequest(url) {
+
+        const controller =
+            new AbortController();
+
+        const timer =
+            setTimeout(
+                () => controller.abort(),
+                ASEM.timeout
+            );
+
+        try {
+
+            const response =
+                await fetch(url, {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/json"
+                    },
+                    cache: "no-store",
+                    signal: controller.signal
+                });
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `HTTP ${response.status}`
+                );
+            }
+
+
+            const type =
+                response.headers.get(
+                    "content-type"
+                ) || "";
+
+
+            if (
+                !type.includes("application/json")
+            ) {
+
+                throw new Error(
+                    "API response is not JSON"
+                );
+            }
+
+
+            return await response.json();
+
+        } finally {
+
+            clearTimeout(timer);
+
+        }
+    }
+
+
+    /* =========================================================
+       GRID HELPERS
+       ========================================================= */
+
+    function getGrid(id) {
+
+        return document.getElementById(id);
+    }
+
+
+    function showLoading(grid, text) {
+
+        if (!grid) {
+            return;
+        }
+
+        grid.innerHTML = `
+            <article class="card platform-state">
+                <div
+                    class="loading-spinner"
+                    aria-hidden="true">
+                </div>
+
+                <h3>
+                    ${escapeHTML(text)}
+                </h3>
+
+                <p>
+                    Please wait...
+                </p>
+            </article>
+        `;
+    }
+
+
+    function showEmpty(
+        grid,
+        title,
+        message
+    ) {
+
+        if (!grid) {
+            return;
+        }
+
+        grid.innerHTML = `
+            <article class="card platform-state">
+
+                <div
+                    class="platform-card-icon"
+                    aria-hidden="true">
+                    🌐
+                </div>
+
+                <h3>
+                    ${escapeHTML(title)}
+                </h3>
+
+                <p>
+                    ${escapeHTML(message)}
+                </p>
+
+            </article>
+        `;
+    }
+
+
+    function showError(
+        grid,
+        title,
+        message,
+        retryAction
+    ) {
+
+        if (!grid) {
+            return;
+        }
+
+        grid.innerHTML = `
+            <article class="card platform-state">
+
+                <div
+                    class="platform-card-icon"
+                    aria-hidden="true">
+                    ⚠️
+                </div>
+
+                <h3>
+                    ${escapeHTML(title)}
+                </h3>
+
+                <p>
+                    ${escapeHTML(message)}
+                </p>
+
+                <button
+                    type="button"
+                    class="btn"
+                    data-retry="${escapeHTML(retryAction)}">
+                    Retry
+                </button>
+
+            </article>
+        `;
+    }
+
+
+    /* =========================================================
+       CARD BUILDERS
+       ========================================================= */
+
+    function buildTourismCard(item) {
+
+        const name =
+            item.name ||
+            item.title ||
+            "Tourism Destination";
+
+
+        const description =
+            item.description ||
+            "Discover this destination.";
+
+
+        const category =
+            item.category ||
+            "Tourism";
+
+
+        const image =
+            item.image ||
+            item.photo ||
+            "";
+
+
+        return `
+            <article
+                class="card platform-result-card"
+                data-type="tourism"
+                data-id="${escapeHTML(item.id || "")}">
+
+                ${
+                    image
+                    ? `
+                        <img
+                            src="${escapeHTML(image)}"
+                            alt="${escapeHTML(name)}"
+                            loading="lazy"
+                            class="platform-card-image"
+                            onerror="this.style.display='none'"
+                        >
+                    `
+                    : `
+                        <div
+                            class="platform-card-icon"
+                            aria-hidden="true">
+                            🏝️
+                        </div>
+                    `
+                }
+
+                <div class="platform-card-content">
+
+                    <span class="platform-card-category">
+                        ${escapeHTML(category)}
+                    </span>
+
+                    <h3>
+                        ${escapeHTML(name)}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(description)}
+                    </p>
+
+                    ${
+                        item.rating !== undefined
+                        ? `
+                            <div class="platform-rating">
+                                ⭐ ${escapeHTML(item.rating)}
+                            </div>
+                        `
+                        : ""
+                    }
+
+                </div>
+
+            </article>
+        `;
+    }
+
+
+    function buildBusinessCard(item) {
+
+        const name =
+            item.name ||
+            item.title ||
+            "Global Business";
+
+
+        const description =
+            item.description ||
+            "Discover this business.";
+
+
+        const category =
+            item.category ||
+            "Business";
+
+
+        const image =
+            item.logo ||
+            item.cover_image ||
+            item.image ||
+            "";
+
+
+        return `
+            <article
+                class="card platform-result-card"
+                data-type="business"
+                data-id="${escapeHTML(item.id || "")}">
+
+                ${
+                    image
+                    ? `
+                        <img
+                            src="${escapeHTML(image)}"
+                            alt="${escapeHTML(name)}"
+                            loading="lazy"
+                            class="platform-card-image"
+                            onerror="this.style.display='none'"
+                        >
+                    `
+                    : `
+                        <div
+                            class="platform-card-icon"
+                            aria-hidden="true">
+                            🌍
+                        </div>
+                    `
+                }
+
+                <div class="platform-card-content">
+
+                    <span class="platform-card-category">
+                        ${escapeHTML(category)}
+                    </span>
+
+                    <h3>
+                        ${escapeHTML(name)}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(description)}
+                    </p>
+
+                    ${
+                        item.address
+                        ? `
+                            <small>
+                                📍 ${escapeHTML(item.address)}
+                            </small>
+                        `
+                        : ""
+                    }
+
+                    ${
+                        item.rating !== undefined
+                        ? `
+                            <div class="platform-rating">
+                                ⭐ ${escapeHTML(item.rating)}
+                            </div>
+                        `
+                        : ""
+                    }
+
+                </div>
+
+            </article>
+        `;
+    }
+
+
+    function buildProductCard(item) {
+
+        const name =
+            item.name ||
+            item.title ||
+            "Global Product";
+
+
+        const description =
+            item.description ||
+            "Discover this product.";
+
+
+        const category =
+            item.category ||
+            "Product";
+
+
+        const image =
+            item.image ||
+            "";
+
+
+        return `
+            <article
+                class="card platform-result-card"
+                data-type="product"
+                data-id="${escapeHTML(item.id || "")}">
+
+                ${
+                    image
+                    ? `
+                        <img
+                            src="${escapeHTML(image)}"
+                            alt="${escapeHTML(name)}"
+                            loading="lazy"
+                            class="platform-card-image"
+                            onerror="this.style.display='none'"
+                        >
+                    `
+                    : `
+                        <div
+                            class="platform-card-icon"
+                            aria-hidden="true">
+                            🛒
+                        </div>
+                    `
+                }
+
+                <div class="platform-card-content">
+
+                    <span class="platform-card-category">
+                        ${escapeHTML(category)}
+                    </span>
+
+                    <h3>
+                        ${escapeHTML(name)}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(description)}
+                    </p>
+
+                    ${
+                        item.price !== undefined
+                        ? `
+                            <strong class="product-price">
+                                ${escapeHTML(item.price)}
+                                ${escapeHTML(
+                                    item.currency || "USD"
+                                )}
+                            </strong>
+                        `
+                        : ""
+                    }
+
+                </div>
+
+            </article>
+        `;
+    }
+
+
+    function buildProjectCard(item) {
+
+        const name =
+            item.name ||
+            item.title ||
+            "ASEM Project";
+
+
+        const description =
+            item.description ||
+            "ASEM Digital Solutions project.";
+
+
+        const image =
+            item.image ||
+            "";
+
+
+        return `
+            <article
+                class="card project-card"
+                data-type="project"
+                data-id="${escapeHTML(item.id || "")}">
+
+                ${
+                    image
+                    ? `
+                        <img
+                            src="${escapeHTML(image)}"
+                            alt="${escapeHTML(name)}"
+                            loading="lazy"
+                            onerror="this.style.display='none'"
+                        >
+                    `
+                    : `
+                        <div
+                            class="platform-card-icon"
+                            aria-hidden="true">
+                            🚀
+                        </div>
+                    `
+                }
+
+                <h3>
+                    ${escapeHTML(name)}
+                </h3>
+
+                <p>
+                    ${escapeHTML(description)}
+                </p>
+
+            </article>
+        `;
+    }
+
+
+    function renderGrid(
+        grid,
+        items,
+        builder,
+        emptyTitle,
+        emptyMessage
+    ) {
+
+        if (!grid) {
+            return;
+        }
+
+        if (!items.length) {
+
+            showEmpty(
+                grid,
+                emptyTitle,
+                emptyMessage
+            );
+
+            return;
+        }
+
+        grid.innerHTML =
+            items
+                .map(builder)
+                .join("");
+    }
+
+
+    /* =========================================================
+       LOAD TOURISM
+       ========================================================= */
+
+    async function loadTourism() {
+
+        const grid =
+            getGrid("tourismGrid");
+
+        const section =
+            document.getElementById(
+                "tourism-section"
+            ) ||
+            document.getElementById(
+                "tourism-results"
+            );
+
+
+        if (!grid) {
+
+            console.warn(
+                "ASEM: tourismGrid not found"
+            );
+
+            return;
+        }
+
+
+        if (section) {
+            section.hidden = false;
+        }
+
+
+        showLoading(
+            grid,
+            "Loading Global Tourism..."
+        );
+
+
+        try {
+
+            const data =
+                await apiRequest(
+                    ASEM.api.tourism
+                );
+
+
+            const items =
+                normalizeArray(data);
+
+
+            renderGrid(
+                grid,
+                items,
+                buildTourismCard,
+                "No tourism data yet",
+                "Tourism destinations will appear here."
+            );
+
+
+            if (section) {
+                section.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+
+        } catch (error) {
+
+            console.error(
+                "ASEM Tourism:",
+                error
+            );
+
+
+            showError(
+                grid,
+                "Tourism temporarily unavailable",
+                "The tourism service could not be reached.",
+                "tourism"
+            );
+        }
+    }
+
+
+    /* =========================================================
+       LOAD BUSINESSES
+       ========================================================= */
+
+    async function loadBusinesses() {
+
+        const grid =
+            getGrid("businessesGrid");
+
+        const section =
+            document.getElementById(
+                "businesses-section"
+            ) ||
+            document.getElementById(
+                "businesses-results"
+            );
+
+
+        if (!grid) {
+
+            console.warn(
+                "ASEM: businessesGrid not found"
+            );
+
+            return;
+        }
+
+
+        if (section) {
+            section.hidden = false;
+        }
+
+
+        showLoading(
+            grid,
+            "Loading Global Businesses..."
+        );
+
+
+        try {
+
+            const data =
+                await apiRequest(
+                    ASEM.api.businesses
+                );
+
+
+            const items =
+                normalizeArray(data);
+
+
+            renderGrid(
+                grid,
+                items,
+                buildBusinessCard,
+                "No businesses yet",
+                "Businesses and services will appear here."
+            );
+
+
+            if (section) {
+                section.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+
+        } catch (error) {
+
+            console.error(
+                "ASEM Businesses:",
+                error
+            );
+
+
+            showError(
+                grid,
+                "Businesses temporarily unavailable",
+                "The business service could not be reached.",
+                "businesses"
+            );
+        }
+    }
+
+
+    /* =========================================================
+       LOAD PRODUCTS
+       ========================================================= */
+
+    async function loadProducts() {
+
+        const grid =
+            getGrid("productsGrid");
+
+        const section =
+            document.getElementById(
+                "products-section"
+            ) ||
+            document.getElementById(
+                "products-results"
+            );
+
+
+        if (!grid) {
+
+            console.warn(
+                "ASEM: productsGrid not found"
+            );
+
+            return;
+        }
+
+
+        if (section) {
+            section.hidden = false;
+        }
+
+
+        showLoading(
+            grid,
+            "Loading Global Products..."
+        );
+
+
+        try {
+
+            const data =
+                await apiRequest(
+                    ASEM.api.products
+                );
+
+
+            const items =
+                normalizeArray(data);
+
+
+            renderGrid(
+                grid,
+                items,
+                buildProductCard,
+                "No products yet",
+                "Products will appear here."
+            );
+
+
+            if (section) {
+                section.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+
+        } catch (error) {
+
+            console.error(
+                "ASEM Products:",
+                error
+            );
+
+
+            showError(
+                grid,
+                "Products temporarily unavailable",
+                "The products service could not be reached.",
+                "products"
+            );
+        }
+    }
+
+
+    /* =========================================================
+       LOAD PROJECTS
+       ========================================================= */
+
+    async function loadProjects() {
+
+        const grid =
+            getGrid("projectsGrid");
+
+
+        if (!grid) {
+
+            console.warn(
+                "ASEM: projectsGrid not found"
+            );
+
+            return;
+        }
+
+
+        showLoading(
+            grid,
+            "Loading ASEM Projects..."
+        );
+
+
+        try {
+
+            const data =
+                await apiRequest(
+                    ASEM.api.projects
+                );
+
+
+            const items =
+                normalizeArray(data);
+
+
+            renderGrid(
+                grid,
+                items,
+                buildProjectCard,
+                "ASEM Projects",
+                "Projects will appear here."
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "ASEM Projects:",
+                error
+            );
+
+
+            showEmpty(
+                grid,
+                "ASEM Projects",
+                "The project showcase will appear here."
+            );
+        }
+    }
+
+
+    /* =========================================================
+       PORTFOLIO
+       ========================================================= */
+
+    function openPortfolio() {
+
+        openPageSection("portfolio");
+
+
+        const grid =
+            getGrid("portfolioGrid");
+
+
+        if (!grid) {
+            return;
+        }
+
+
+        if (!grid.children.length) {
+
+            grid.innerHTML = `
+                <article class="card portfolio-card">
+
+                    <div
+                        class="platform-card-icon"
+                        aria-hidden="true">
+                        💻
+                    </div>
+
+                    <h3>
+                        ASEM Digital Solutions
+                    </h3>
+
+                    <p>
+                        Global digital solutions,
+                        software platforms and
+                        modern technology services.
+                    </p>
+
+                </article>
+            `;
+        }
+    }
+
+
+    /* =========================================================
+       SEARCH
+       ========================================================= */
+
+    function focusSearch() {
+
+        const search =
+            document.getElementById(
+                "searchBox"
+            );
+
+
+        if (!search) {
+            return;
+        }
+
+
+        search.focus();
+
+        search.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }
+
+
+    function searchLocal(value) {
+
+        const query =
+            String(value || "")
+                .toLowerCase()
+                .trim();
+
+
+        const cards =
+            $$(".platform-result-card, .project-card");
+
+
+        cards.forEach(card => {
+
+            if (!query) {
+
+                card.hidden = false;
+
+                return;
+            }
+
+
+            const text =
+                card.textContent
+                    .toLowerCase();
+
+
+            card.hidden =
+                !text.includes(query);
+        });
+    }
+
+
+    /* =========================================================
+       THEME
+       ========================================================= */
+
+    function applyTheme(theme) {
+
+        const valid =
+            theme === "dark"
+            ? "dark"
+            : "light";
+
+
+        document.documentElement
+            .setAttribute(
+                "data-theme",
+                valid
+            );
+
+
+        const button =
+            document.getElementById(
+                "themeToggle"
+            );
+
+
+        if (button) {
+
+            const dark =
+                valid === "dark";
+
+
+            button.textContent =
+                dark
+                ? "☀️"
+                : "🌙";
+
+
+            button.setAttribute(
+                "aria-label",
+                dark
+                ? "Switch to light mode"
+                : "Switch to dark mode"
+            );
+
+
+            button.setAttribute(
+                "title",
+                dark
+                ? "Switch to light mode"
+                : "Switch to dark mode"
+            );
+        }
+
+
+        try {
+
+            localStorage.setItem(
+                ASEM.storage.theme,
+                valid
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "ASEM: theme storage unavailable"
+            );
+        }
+    }
+
+
+    function initializeTheme() {
+
+        let saved = null;
+
+
+        try {
+
+            saved =
+                localStorage.getItem(
+                    ASEM.storage.theme
+                );
+
+        } catch (_) {}
+
+
+        if (
+            saved === "dark" ||
+            saved === "light"
+        ) {
+
+            applyTheme(saved);
+
+            return;
+        }
+
+
+        const prefersDark =
+            window.matchMedia &&
+            window.matchMedia(
+                "(prefers-color-scheme: dark)"
+            ).matches;
+
+
+        applyTheme(
+            prefersDark
+            ? "dark"
+            : "light"
+        );
+    }
+
+
+    function toggleTheme() {
+
+        const current =
+            document.documentElement
+                .getAttribute(
+                    "data-theme"
+                );
+
+
+        applyTheme(
+            current === "dark"
+            ? "light"
+            : "dark"
+        );
+    }
+
+
+    /* =========================================================
+       LANGUAGE
+       ========================================================= */
+
+    function applyLanguage(language) {
+
+        const selected =
+            language || "auto";
+
+
+        if (selected !== "auto") {
+
+            document.documentElement
+                .setAttribute(
+                    "lang",
+                    selected
+                );
+
+        } else {
+
+            const browserLanguage =
+                (
+                    navigator.language ||
+                    "en"
+                ).substring(0, 2);
+
+
+            document.documentElement
+                .setAttribute(
+                    "lang",
+                    [
+                        "ar",
+                        "en",
+                        "fr",
+                        "ja"
+                    ].includes(browserLanguage)
+                    ? browserLanguage
+                    : "en"
+                );
+        }
+
+
+        try {
+
+            localStorage.setItem(
+                ASEM.storage.language,
+                selected
+            );
+
+        } catch (_) {}
+
+
+        document.dispatchEvent(
+            new CustomEvent(
+                "asem:languagechange",
+                {
+                    detail: {
+                        language: selected
+                    }
+                }
+            )
+        );
+    }
+
+
+    function initializeLanguage() {
+
+        const select =
+            document.getElementById(
+                "langSwitch"
+            );
+
+
+        if (!select) {
+            return;
+        }
+
+
+        let saved = "auto";
+
+
+        try {
+
+            saved =
+                localStorage.getItem(
+                    ASEM.storage.language
+                ) || "auto";
+
+        } catch (_) {}
+
+
+        if (
+            Array.from(
+                select.options
+            ).some(
+                option =>
+                    option.value === saved
+            )
+        ) {
+
+            select.value = saved;
+        }
+
+
+        applyLanguage(
+            select.value
+        );
+    }
+
+
+    /* =========================================================
+       LEGACY + NEW ACTION SYSTEM
+       ========================================================= */
+
+    function actionFromElement(element) {
+
+        if (!element) {
+            return null;
+        }
+
+
+        /*
+         * New system
+         */
+
+        if (
+            element.dataset &&
+            element.dataset.platformAction
+        ) {
+
+            return element.dataset.platformAction;
+        }
+
+
+        /*
+         * Legacy system
+         */
+
+        if (
+            element.dataset &&
+            element.dataset.section
+        ) {
+
+            const section =
+                element.dataset.section;
+
+
+            const legacyMap = {
+
+                "tourism-results":
+                    "tourism",
+
+                "tourism-section":
+                    "tourism",
+
+                "businesses-results":
+                    "businesses",
+
+                "businesses-section":
+                    "businesses",
+
+                "products-results":
+                    "products",
+
+                "products-section":
+                    "products",
+
+                "projects":
+                    "projects",
+
+                "portfolio":
+                    "portfolio",
+
+                "services":
+                    "services",
+
+                "contact":
+                    "contact",
+
+                "about":
+                    "about"
+            };
+
+
+            return (
+                legacyMap[section] ||
+                null
+            );
+        }
+
+
+        return null;
+    }
+
+
+    const actions = {
+
+        tourism() {
+            loadTourism();
+        },
+
+
+        businesses() {
+            loadBusinesses();
+        },
+
+
+        products() {
+            loadProducts();
+        },
+
+
+        projects() {
+            openPageSection(
+                "projects"
+            );
+
+            loadProjects();
+        },
+
+
+        portfolio() {
+            openPortfolio();
+        },
+
+
+        services() {
+            openPageSection(
+                "services"
+            );
+        },
+
+
+        contact() {
+            window.location.href =
+                "contact.html";
+        },
+
+
+        about() {
+            window.location.href =
+                "about.html";
+        },
+
+
+        search() {
+            focusSearch();
+        },
+
+
+        top() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    };
+
+
+    function executeAction(element) {
+
+        const action =
+            actionFromElement(element);
+
+
+        if (!action) {
+            return false;
+        }
+
+
+        const handler =
+            actions[action];
+
+
+        if (
+            typeof handler !==
+            "function"
+        ) {
+
+            console.warn(
+                "ASEM: unknown action:",
+                action
+            );
+
+            return false;
+        }
+
+
+        try {
+
+            handler();
+
+            return true;
+
+        } catch (error) {
+
+            console.error(
+                "ASEM action error:",
+                action,
+                error
+            );
+
+            return false;
+        }
+    }
+
+
+    /* =========================================================
+       CLICK ROUTER
+       ========================================================= */
+
+    function initializeClickRouter() {
+
+        document.addEventListener(
+            "click",
+            event => {
+
+                const target = event.target;
+
+                if (
+                    !target ||
+                    typeof target.closest !== "function"
+                ) {
+                    return;
+                }
+
+                const element =
+                    target.closest(
+                        "[data-platform-action], [data-section]"
+                    );
+
+
+                if (element) {
+
+                    /*
+                     * Do not hijack normal links.
+                     * Only handle cards/buttons/divs
+                     * belonging to the platform system.
+                     */
+
+                    const handled =
+                        executeAction(
+                            element
+                        );
+
+
+                    if (handled) {
+
+                        event.preventDefault();
+
+                        return;
+                    }
+                }
+
+
+                /*
+                 * Retry
+                 */
+
+                const retry =
+                    target.closest(
+                        "[data-retry]"
+                    );
+
+
+                if (retry) {
+
+                    const action =
+                        retry.dataset.retry;
+
+
+                    if (
+                        actions[action]
+                    ) {
+
+                        event.preventDefault();
+
+                        actions[action]();
+                    }
+
+                    return;
+                }
+
+
+                /*
+                 * Theme button
+                 *
+                 * This is handled here as a safety net,
+                 * even if the direct listener fails.
+                 */
+
+                if (
+                    target.closest(
+                        "#themeToggle"
+                    )
+                ) {
+
+                    toggleTheme();
+
+                    return;
+                }
+            }
+        );
+    }
+
+
+    /* =========================================================
+       KEYBOARD
+       ========================================================= */
+
+    function initializeKeyboard() {
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key !== "Enter" &&
+                    event.key !== " "
+                ) {
+                    return;
+                }
+
+
+                const element =
+                    event.target.closest(
+                        "[data-platform-action], [data-section]"
+                    );
+
+
+                if (!element) {
+                    return;
+                }
+
+
+                event.preventDefault();
+
+                executeAction(element);
+            }
+        );
+    }
+
+
+    /* =========================================================
+       THEME EVENTS
+       ========================================================= */
+
+    function initializeThemeEvents() {
+
+        const button =
+            document.getElementById(
+                "themeToggle"
+            );
+
+
+        if (!button) {
+            return;
+        }
+
+
+        button.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+                toggleTheme();
+            }
+        );
+    }
+
+
+    /* =========================================================
+       LANGUAGE EVENTS
+       ========================================================= */
+
+    function initializeLanguageEvents() {
+
+        const select =
+            document.getElementById(
+                "langSwitch"
+            );
+
+
+        if (!select) {
+            return;
+        }
+
+
+        select.addEventListener(
+            "change",
+            event => {
+
+                applyLanguage(
+                    event.target.value
+                );
+            }
+        );
+    }
+
+
+    /* =========================================================
+       SEARCH EVENTS
+       ========================================================= */
+
+    function initializeSearch() {
+
+        const search =
+            document.getElementById(
+                "searchBox"
+            );
+
+
+        if (!search) {
+            return;
+        }
+
+
+        search.addEventListener(
+            "input",
+            event => {
+
+                searchLocal(
+                    event.target.value
+                );
+            }
+        );
+
+
+        search.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    search.value = "";
+
+                    searchLocal("");
+
+                    search.blur();
+                }
+            }
+        );
+    }
+
+
+    /* =========================================================
+       NAVIGATION
+       ========================================================= */
+
+    function initializeNavigation() {
+
+        document.addEventListener(
+            "click",
+            event => {
+
+                const link =
+                    event.target.closest(
+                        'a[href^="#"]'
+                    );
+
+
+                if (!link) {
+                    return;
+                }
+
+
+                const href =
+                    link.getAttribute(
+                        "href"
+                    );
+
+
+                if (
+                    !href ||
+                    href === "#"
+                ) {
+                    return;
+                }
+
+
+                const id =
+                    href.substring(1);
+
+
+                const section =
+                    document.getElementById(id);
+
+
+                if (!section) {
+                    return;
+                }
+
+
+                event.preventDefault();
+
+                openPageSection(id);
+            }
+        );
+    }
+
+
+    /* =========================================================
+       SCROLL TO TOP
+       ========================================================= */
+
+    function initializeScrollTop() {
+
+        const button =
+            document.getElementById(
+                "scrollTop"
+            );
+
+
+        if (!button) {
+            return;
+        }
+
+
+        const update =
+            () => {
+
+                button.classList.toggle(
+                    "visible",
+                    window.scrollY > 400
+                );
+            };
+
+
+        window.addEventListener(
+            "scroll",
+            update,
+            {
+                passive: true
+            }
+        );
+
+
+        update();
+
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            }
+        );
+    }
+
+
+    /* =========================================================
+       INITIAL RESULT STATE
+       ========================================================= */
+
+    function initializeResultSections() {
+
+        [
+            "tourism-section",
+            "tourism-results",
+            "businesses-section",
+            "businesses-results",
+            "products-section",
+            "products-results"
+        ].forEach(hideSection);
+    }
+
+
+    /* =========================================================
+       ACCESSIBILITY
+       ========================================================= */
+
+    function initializeAccessibility() {
+
+        $$(
+            "[data-platform-action], [data-section]"
+        ).forEach(element => {
+
+            const tag =
+                element.tagName
+                    .toLowerCase();
+
+
+            if (
+                tag !== "button" &&
+                tag !== "a"
+            ) {
+
+                if (
+                    !element.hasAttribute(
+                        "role"
+                    )
+                ) {
+
+                    element.setAttribute(
+                        "role",
+                        "button"
+                    );
+                }
+
+
+                if (
+                    !element.hasAttribute(
+                        "tabindex"
+                    )
+                ) {
+
+                    element.setAttribute(
+                        "tabindex",
+                        "0"
+                    );
+                }
+            }
+        });
+    }
+
+
+    /* =========================================================
+       GLOBAL COMPATIBILITY API
+       ========================================================= */
+
+    window.ASEM = ASEM;
+
+    window.loadTourism =
+        loadTourism;
+
+    window.loadBusinesses =
+        loadBusinesses;
+
+    window.loadProducts =
+        loadProducts;
+
+    window.loadProjects =
+        loadProjects;
+
+    window.openPortfolio =
+        openPortfolio;
+
+    window.openPageSection =
+        openPageSection;
+
+    window.focusASEMSearch =
+        focusSearch;
+
+    window.toggleASEMTheme =
+        toggleTheme;
+
+
+    /* =========================================================
+       START
+       ========================================================= */
+
+    function initializeApplication() {
+
+        initializeTheme();
+
+        initializeLanguage();
+
+        initializeThemeEvents();
+
+        initializeLanguageEvents();
+
+        initializeSearch();
+
+        initializeClickRouter();
+
+        initializeKeyboard();
+
+        initializeNavigation();
+
+        initializeScrollTop();
+
+        initializeAccessibility();
+
+        initializeResultSections();
+
+
+        console.info(
+            "ASEM Global Platform initialized."
+        );
+    }
+
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeApplication,
+            {
+                once: true
+            }
+        );
+
+    } else {
+
+        initializeApplication();
+    }
+
+})();

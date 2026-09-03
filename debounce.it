@@ -1,0 +1,69 @@
+function initializeGlobalSearch() {
+
+    const input =
+        document.getElementById("searchBox");
+
+    if (!input) {
+        return;
+    }
+
+
+    let timer;
+
+
+    input.addEventListener(
+        "input",
+        event => {
+
+            clearTimeout(timer);
+
+
+            timer = setTimeout(
+                () => {
+
+                    searchASEMPlatform(
+                        event.target.value
+                    );
+
+                },
+                250
+            );
+        }
+    );
+
+
+    input.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+
+                searchASEMPlatform(
+                    input.value
+                );
+            }
+
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                input.value = "";
+
+                const grid =
+                    document.getElementById(
+                        "searchResults"
+                    );
+
+                if (grid) {
+                    grid.innerHTML = "";
+                }
+            }
+        }
+    );
+}
+

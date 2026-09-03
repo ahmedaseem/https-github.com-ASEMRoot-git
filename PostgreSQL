@@ -1,0 +1,171 @@
+async function searchASEMPlatform(query) {
+
+    const q =
+        String(query || "").trim();
+
+    const type =
+        document.getElementById("searchType")?.value ||
+        "all";
+
+
+    if (!q) {
+        return;
+    }
+
+
+    const grid =
+        document.getElementById("searchResults") ||
+        document.getElementById("globalSearchResults");
+
+
+    if (grid) {
+
+        grid.innerHTML = `
+            <article class="card platform-state">
+                <div class="loading-spinner"></div>
+                <h3>Searching ASEM...</h3>
+                <p>Searching tourism, businesses, products and projects.</p>
+            </article>
+        `;
+    }
+
+
+    try {
+
+        const params =
+            new URLSearchParams({
+                q,
+                type,
+                limit: "50",
+                offset: "0"
+            });
+
+
+        const response =
+            await fetch(
+                `/api/search?${params.toString()}`,
+                {
+                    headers: {
+                        Accept:
+                            "application/json"
+                    },
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const results =
+            data.items ||
+            data ||
+            [];
+
+
+        ASEM.state.lastResults =
+            results;
+
+
+        if (!grid) {
+            return results;
+        }
+
+
+        if (!results.length) {
+
+            grid.innerHTML = `
+                <article class="card platform-state">
+                    <div class="platform-card-icon">
+                        🔎
+                    </div>
+
+                    <h3>
+                        No results found
+                    </h3>
+
+                    <p>
+                        Nothing matched
+                        "${escapeHTML(q)}".
+                    </p>
+                </article>
+            `;
+
+            return results;
+        }
+
+
+        grid.innerHTML =
+            results
+                .map(buildUnifiedResultCard)
+                .join("");
+
+
+        const section =
+            grid.closest("section");
+
+
+        if (section) {
+
+            section.hidden = false;
+
+            section.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+
+
+        return results;
+
+    }
+    catch (error) {
+
+        console.error(
+            "ASEM search:",
+            error
+        );
+
+
+        if (grid) {
+
+            grid.innerHTML = `
+                <article class="card platform-state">
+
+                    <div class="platform-card-icon">
+                        ⚠️
+                    </div>
+
+                    <h3>
+                        Search unavailable
+                    </h3>
+
+                    <p>
+                        The platform search
+                        service could not be reached.
+                    </p>
+
+                    <button
+                        type="button"
+                        class="btn"
+                        data-platform-action="search">
+                        Retry
+                    </button>
+
+                </article>
+            `;
+        }
+
+
+        return [];
+    }
+}
+

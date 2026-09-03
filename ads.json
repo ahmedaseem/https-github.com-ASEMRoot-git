@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ad-001",
+    "title": "Advertise With ASEM",
+    "description": "Reach customers through the ASEM global platform.",
+    "image": "/assets/images/ad-example.jpg",
+    "url": "advertise.html",
+    "placement": "homepage-top",
+    "active": true
+  },
+  {
+    "id": "ad-002",
+    "title": "Your Business Here",
+    "description": "Promote your company to ASEM visitors.",
+    "image": "/assets/images/ad-example-2.jpg",
+    "url": "advertise.html",
+    "placement": "business-sidebar",
+    "active": true
+  }
+]

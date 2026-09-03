@@ -1,0 +1,37 @@
+[
+  {
+    "name": "ASEM Free Platform",
+    "image": "project.png",
+    "status": "قيد التطوير",
+    "version": "1.0",
+    "license": "Free",
+    "level": "عام",
+    "features": [
+      "مشاريع رقمية مجانية",
+      "حلول برمجية وتقنية",
+      "دعم لغات متعددة",
+      "تصميم يعمل على الهاتف والكمبيوتر"
+    ],
+    "page": "projects.html",
+    "doc": "about.html",
+    "download": "",
+    "github": "https://github.com/gov-server"
+  },
+  {
+    "name": "Digital Solutions",
+    "image": "project.png",
+    "status": "متاح",
+    "version": "1.0",
+    "license": "Open",
+    "level": "متقدم",
+    "features": [
+      "أنظمة رقمية",
+      "تطوير مواقع",
+      "برمجيات حديثة"
+    ],
+    "page": "projects.html",
+    "doc": "about.html",
+    "download": "",
+    "github": "https://github.com/gov-server"
+  }
+]

@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+    "outDir": "./dist",
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "skipLibCheck": true
+  },
+  "include": [
+  "main.ts",
+  "app.module.ts",
+  "redis.module.ts",
+  "redis.client.ts",
+  "cache.module.ts",
+  "queue.module.ts",
+  "email.module.ts",
+  "email.processor.ts",
+  "email.queue.ts",
+  "email.service.ts",
+  "search.processor.ts",
+  "search.queue.ts",
+  "search.jobs.ts"
+]
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".venv"
+  ]
+}

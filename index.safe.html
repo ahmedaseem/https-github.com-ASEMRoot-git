@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="auto">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ASEM Free Projects</title>
+
+<style>
+body{
+font-family: "Tahoma", sans-serif;
+background:#f5f6fa;
+margin:0;
+}
+
+header{
+text-align:center;
+padding:40px 20px;
+background:#111;
+color:#fff;
+}
+
+header h1{
+margin:0;
+font-size:32px;
+}
+
+.intro{
+text-align:center;
+margin:40px auto;
+max-width:700px;
+}
+
+.search-box{
+text-align:center;
+margin:20px 0;
+}
+
+.search-box input{
+width:80%;
+max-width:400px;
+padding:12px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:16px;
+}
+
+.projects{
+max-width:1200px;
+margin:auto;
+padding:40px 20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:25px;
+}
+
+.card{
+background:#fff;
+border-radius:15px;
+padding:25px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+transition:.3s;
+border:1px solid #eee;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 15px 35px rgba(0,0,0,.12);
+}
+
+.status{
+display:inline-block;
+padding:6px 12px;
+border-radius:20px;
+font-size:13px;
+background:#2ecc71;
+color:#fff;
+margin-bottom:15px;
+}
+
+.project-img{
+width:100%;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+.card h2{
+margin:10px 0;
+font-size:22px;
+}
+
+.card p{
+line-height:1.8;
+color:#555;
+}
+
+.features{
+margin:20px 0;
+padding-right:20px;
+}
+
+.features li{
+margin:8px 0;
+color:#333;
+}
+
+.buttons{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:15px;
+}
+
+.buttons a{
+padding:10px 18px;
+background:#111;
+color:#fff;
+text-decoration:none;
+border-radius:8px;
+transition:.3s;
+}
+
+.buttons a:hover{
+background:#444;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>🚀 ASEM Free</h1>
+
+<p>
+مشاريع رقمية مجانية وحلول برمجية مخصصة للأفراد والشركات حول العالم
+</p>
+
+<section class="intro">
+<h2>ابدأ بأي مشروع مجانًا</h2>
+<p>كل مشروع في هذه الصفحة مجاني بالكامل ويمكن لأي شخص استخدامه أو تطويره أو التعلم منه.</p>
+</section>
+
+<div class="search-box">
+    <input type="text" id="search" placeholder="ابحث عن مشروع..." onkeyup="filterCards()">
+</div>
+
+<section class="projects">
+<div class="grid" id="projectsGrid"></div>
+</section>
+
+<script>
+// تحميل المشاريع من JSON
+fetch("projects.json")
+.then(res => res.json())
+.then(data => {
+    let grid = document.getElementById("projectsGrid");
+
+    data.forEach(project => {
+        let card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <span class="status">✅ ${project.status}</span>
+
+            <img src="${project.image}" class="project-img">
+
+            <h2>${project.name}</h2>
+
+            <p><strong>الإصدار:</strong> ${project.version}</p>
+            <p><strong>الترخيص:</strong> ${project.license}</p>
+            <p><strong>المستوى:</strong> ${project.level}</p>
+
+            <ul class="features">
+                ${project.features.map(f => `<li>${f}</li>`).join("")}
+            </ul>
+
+            <div class="buttons">
+                <a href="${project.page}">عرض المشروع</a>
+                <a href="${project.doc}">التوثيق</a>
+                <a href="download.php?file=${project.download}">تحميل</a>
+                <a href="${project.github}" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        `;
+
+        grid.appendChild(card);
+    });
+});
+
+// البحث داخل كل محتوى البطاقة
+function filterCards() {
+    let input = document.getElementById("search").value.toLowerCase();
+    let cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        let text = card.innerText.toLowerCase();
+        card.style.display = text.includes(input) ? "block" : "none";
+    });
+}
+</script>
+
+</body>
+</html>
+<nav class="nav">
+
+<a href="index.html">الرئيسية</a>
+<a href="projects.html">المشاريع</a>
+<a href="art.html">الأعمال</a>
+<a href="contact.html">تواصل</a>
+
+<select id="langSwitch">
+<option value="ar">العربية</option>
+<option value="en">English</option>
+<option value="fr">Français</option>
+</select>
+
+<button id="dark-btn">
+🌙
+</button>
+
+</nav>

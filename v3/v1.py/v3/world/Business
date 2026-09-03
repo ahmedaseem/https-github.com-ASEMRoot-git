@@ -1,0 +1,15 @@
+<button
+    type="button"
+    class="card platform-card"
+    data-platform-action="businesses"
+    aria-controls="businesses-section"
+>
+    <span class="platform-icon" aria-hidden="true">🌍</span>
+
+    <h3>Global Businesses</h3>
+
+    <p>
+        Explore businesses, restaurants,
+        services and organizations worldwide.
+    </p>
+</button>

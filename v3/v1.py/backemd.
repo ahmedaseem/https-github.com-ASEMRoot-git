@@ -1,0 +1,76 @@
+from pydantic import BaseSettings
+from sqlalchemy.orm import declarative_base
+
+from fastapi import FastAPI
+from sqlalchemy import text
+
+from app.database.connection import engine
+
+app = FastAPI(
+    title="ASEM Global API",
+    version="1.0.0"
+)
+
+
+@app.get("/")
+def home():
+    return {
+        "project": "ASEM Global Platform",
+        "status": "online"
+    }
+
+
+@app.get("/health")
+def health():
+
+    with engine.connect() as connection:
+        connection.execute(text("SELECT 1"))
+
+    return {
+        "database": "connected",
+        "status": "healthy"
+    }
+from sqlalchemy import create_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
+
+from app.core.config import settings
+
+engine = create_engine(settings.DATABASE_URL)
+
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
+
+Base = declarative_base()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+from fastapi import FastAPI
+
+from app.api.countries import router as countries_router
+
+
+app = FastAPI(
+    title="ASEM Global API",
+    version="1.0"
+)
+
+
+app.include_router(
+    countries_router
+)
+
+
+@app.get("/")
+def home():
+
+    return {
+        "name": "ASEM",
+        "status": "online"
+    }

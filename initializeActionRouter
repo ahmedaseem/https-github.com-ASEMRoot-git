@@ -1,0 +1,54 @@
+function initializeCopyActions() {
+    document.addEventListener("click", async event => {
+
+        const button =
+            event.target.closest("[data-copy]");
+
+        if (!button) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const text =
+            button.dataset.copy || "";
+
+        if (!text) {
+            return;
+        }
+
+        try {
+
+            await navigator.clipboard.writeText(text);
+
+            const original =
+                button.textContent;
+
+            button.textContent = "Copied ✓";
+
+            setTimeout(() => {
+                button.textContent = original;
+            }, 1500);
+
+        } catch (error) {
+
+            console.error(
+                "ASEM: Clipboard failed",
+                error
+            );
+
+            const textarea =
+                document.createElement("textarea");
+
+            textarea.value = text;
+
+            document.body.appendChild(textarea);
+
+            textarea.select();
+
+            document.execCommand("copy");
+
+            textarea.remove();
+        }
+    });
+}

@@ -1,0 +1,57 @@
+/* Basic Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: 0.3s;
+}
+
+:root {
+    --bg: #ffffff;
+    --text: #222;
+    --card: #f5f5f5;
+}
+
+.dark {
+    --bg: #121212;
+    --text: #f1f1f1;
+    --card: #1e1e1e;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.hero {
+    padding: 120px 20px;
+    text-align: center;
+}
+
+.services-grid,
+.projects-grid,
+.portfolio-grid,
+.payments-grid {
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+}
+
+.service-card,
+.project-card {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.theme-toggle {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}

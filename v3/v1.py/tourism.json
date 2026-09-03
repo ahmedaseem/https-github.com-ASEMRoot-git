@@ -1,0 +1,45 @@
+{
+  "id": "TOURISM_000001",
+
+  "type": "landmark",
+
+  "names": [
+    {
+      "language": "ar",
+      "value": ""
+    },
+    {
+      "language": "en",
+      "value": ""
+    }
+  ],
+
+  "country_id": "",
+  "city_id": "",
+
+  "category": [
+    "history",
+    "culture",
+    "nature"
+  ],
+
+  "description": [
+    {
+      "language": "ar",
+      "text": ""
+    }
+  ],
+
+  "location": {
+    "latitude": "",
+    "longitude": ""
+  },
+
+  "images": [],
+
+  "opening_hours": {},
+
+  "related_tourism": [],
+
+  "related_products": []
+}

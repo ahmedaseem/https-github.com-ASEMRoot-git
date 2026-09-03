@@ -1,0 +1,86 @@
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+
+
+DATABASE_URL = (
+    "postgresql://asem_admin:YOUR_PASSWORD@localhost/asem_world"
+)
+
+
+engine = create_engine(
+    DATABASE_URL
+)
+
+
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
+
+
+Base = declarative_base()
+
+
+def get_db():
+
+    db = SessionLocal()
+
+    try:
+        yield db
+
+    finally:
+        db.close()
+from sqlalchemy import Column, String, Boolean, JSON
+from sqlalchemy.dialects.postgresql import UUID
+from app.database.connection import Base
+
+
+class Country(Base):
+
+    __tablename__ = "countries"
+
+    id = Column(
+        UUID,
+        primary_key=True
+    )
+
+    code = Column(
+        String(10),
+        unique=True,
+        nullable=False
+    )
+
+    continent = Column(
+        String(100)
+    )
+
+    currency_code = Column(
+        String(10)
+    )
+
+    names = Column(
+        JSON,
+        nullable=False
+    )
+
+    verified = Column(
+        Boolean,
+        default=False
+    )
+from fastapi import FastAPI
+
+
+app = FastAPI(
+    title="ASEM Global API",
+    version="1.0"
+)
+
+
+@app.get("/")
+def home():
+    return {
+        "name": "ASEM",
+        "status": "online",
+        "message": "ASEM Global Platform API"
+    }

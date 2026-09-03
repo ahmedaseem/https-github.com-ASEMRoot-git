@@ -1,0 +1,60 @@
+const AuditLog =
+require("../models/AuditLog");
+
+
+
+module.exports =
+(action,resource)=>{
+
+
+return async(req,res,next)=>{
+
+
+res.on(
+"finish",
+async()=>{
+
+
+await AuditLog.create({
+
+user:
+req.user?._id,
+
+
+action,
+
+
+resource,
+
+
+resourceId:
+req.params.id,
+
+
+ip:
+req.ip,
+
+
+userAgent:
+req.headers["user-agent"],
+
+
+status:
+res.statusCode < 400
+?
+"SUCCESS"
+:
+"FAILED"
+
+
+});
+
+
+});
+
+
+next();
+
+};
+
+};

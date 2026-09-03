@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+
+import json
+import urllib.request
+from pathlib import Path
+
+
+SOURCE_URL = "https://raw.githubusercontent.com/mledoze/countries/master/countries.json"
+
+BASE_DIR = Path(__file__).resolve().parents[2]
+OUTPUT_FILE = BASE_DIR / "world" / "countries_source.json"
+
+
+def download_countries():
+    print("ASEM World Data")
+    print("Downloading country source data...")
+
+    request = urllib.request.Request(
+        SOURCE_URL,
+        headers={
+            "User-Agent": "ASEM-World-Data-Pipeline/1.0"
+        },
+    )
+
+    with urllib.request.urlopen(request, timeout=60) as response:
+        data = json.loads(response.read().decode("utf-8"))
+
+    if not isinstance(data, list):
+        raise ValueError("Source data is not a JSON array")
+
+    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+    with OUTPUT_FILE.open("w", encoding="utf-8") as file:
+        json.dump(
+            {
+                "version": "1.0",
+                "source": SOURCE_URL,
+                "record_count": len(data),
+                "data": data,
+            },
+            file,
+            ensure_ascii=False,
+            indent=2,
+        )
+
+    print(f"Downloaded records: {len(data)}")
+    print(f"Saved to: {OUTPUT_FILE}")
+
+
+if __name__ == "__main__":
+    download_countries()

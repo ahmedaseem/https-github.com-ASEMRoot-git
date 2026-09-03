@@ -1,0 +1,2251 @@
+{
+  "source": "ISO 3166-1",
+  "provider": "pycountry",
+  "version": "1.0.0",
+  "entity": "countries",
+  "schema": "global-country-v1",
+  "country_code_standard": "ISO 3166-1 alpha-2",
+  "countries": [
+    {
+      "code": "AF",
+      "name": "Afghanistan",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇫"
+    },
+    {
+      "code": "AL",
+      "name": "Albania",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇱"
+    },
+    {
+      "code": "DZ",
+      "name": "Algeria",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇩🇿"
+    },
+    {
+      "code": "AS",
+      "name": "American Samoa",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇸"
+    },
+    {
+      "code": "AD",
+      "name": "Andorra",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇩"
+    },
+    {
+      "code": "AO",
+      "name": "Angola",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇴"
+    },
+    {
+      "code": "AI",
+      "name": "Anguilla",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇮"
+    },
+    {
+      "code": "AQ",
+      "name": "Antarctica",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇶"
+    },
+    {
+      "code": "AG",
+      "name": "Antigua and Barbuda",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇬"
+    },
+    {
+      "code": "AR",
+      "name": "Argentina",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇷"
+    },
+    {
+      "code": "AM",
+      "name": "Armenia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇲"
+    },
+    {
+      "code": "AW",
+      "name": "Aruba",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇼"
+    },
+    {
+      "code": "AU",
+      "name": "Australia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇺"
+    },
+    {
+      "code": "AT",
+      "name": "Austria",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇹"
+    },
+    {
+      "code": "AZ",
+      "name": "Azerbaijan",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇿"
+    },
+    {
+      "code": "BS",
+      "name": "Bahamas",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇸"
+    },
+    {
+      "code": "BH",
+      "name": "Bahrain",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇭"
+    },
+    {
+      "code": "BD",
+      "name": "Bangladesh",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇩"
+    },
+    {
+      "code": "BB",
+      "name": "Barbados",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇧"
+    },
+    {
+      "code": "BY",
+      "name": "Belarus",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇾"
+    },
+    {
+      "code": "BE",
+      "name": "Belgium",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇪"
+    },
+    {
+      "code": "BZ",
+      "name": "Belize",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇿"
+    },
+    {
+      "code": "BJ",
+      "name": "Benin",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇯"
+    },
+    {
+      "code": "BM",
+      "name": "Bermuda",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇲"
+    },
+    {
+      "code": "BT",
+      "name": "Bhutan",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇹"
+    },
+    {
+      "code": "BO",
+      "name": "Bolivia, Plurinational State of",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇴"
+    },
+    {
+      "code": "BQ",
+      "name": "Bonaire, Sint Eustatius and Saba",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇶"
+    },
+    {
+      "code": "BA",
+      "name": "Bosnia and Herzegovina",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇦"
+    },
+    {
+      "code": "BW",
+      "name": "Botswana",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇼"
+    },
+    {
+      "code": "BV",
+      "name": "Bouvet Island",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇻"
+    },
+    {
+      "code": "BR",
+      "name": "Brazil",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇷"
+    },
+    {
+      "code": "IO",
+      "name": "British Indian Ocean Territory",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇮🇴"
+    },
+    {
+      "code": "BN",
+      "name": "Brunei Darussalam",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇳"
+    },
+    {
+      "code": "BG",
+      "name": "Bulgaria",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇬"
+    },
+    {
+      "code": "BF",
+      "name": "Burkina Faso",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇫"
+    },
+    {
+      "code": "BI",
+      "name": "Burundi",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇮"
+    },
+    {
+      "code": "CV",
+      "name": "Cabo Verde",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇻"
+    },
+    {
+      "code": "KH",
+      "name": "Cambodia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇰🇭"
+    },
+    {
+      "code": "CM",
+      "name": "Cameroon",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇲"
+    },
+    {
+      "code": "CA",
+      "name": "Canada",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇦"
+    },
+    {
+      "code": "KY",
+      "name": "Cayman Islands",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇰🇾"
+    },
+    {
+      "code": "CF",
+      "name": "Central African Republic",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇫"
+    },
+    {
+      "code": "TD",
+      "name": "Chad",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇩"
+    },
+    {
+      "code": "CL",
+      "name": "Chile",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇱"
+    },
+    {
+      "code": "CN",
+      "name": "China",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇳"
+    },
+    {
+      "code": "CX",
+      "name": "Christmas Island",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇽"
+    },
+    {
+      "code": "CC",
+      "name": "Cocos (Keeling) Islands",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇨"
+    },
+    {
+      "code": "CO",
+      "name": "Colombia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇴"
+    },
+    {
+      "code": "KM",
+      "name": "Comoros",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇰🇲"
+    },
+    {
+      "code": "CG",
+      "name": "Congo",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇬"
+    },
+    {
+      "code": "CD",
+      "name": "Congo, The Democratic Republic of the",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇩"
+    },
+    {
+      "code": "CK",
+      "name": "Cook Islands",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇰"
+    },
+    {
+      "code": "CR",
+      "name": "Costa Rica",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇷"
+    },
+    {
+      "code": "HR",
+      "name": "Croatia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇭🇷"
+    },
+    {
+      "code": "CU",
+      "name": "Cuba",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇺"
+    },
+    {
+      "code": "CW",
+      "name": "Curaçao",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇼"
+    },
+    {
+      "code": "CY",
+      "name": "Cyprus",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇾"
+    },
+    {
+      "code": "CZ",
+      "name": "Czechia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇿"
+    },
+    {
+      "code": "CI",
+      "name": "Côte d'Ivoire",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇮"
+    },
+    {
+      "code": "DK",
+      "name": "Denmark",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇩🇰"
+    },
+    {
+      "code": "DJ",
+      "name": "Djibouti",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇩🇯"
+    },
+    {
+      "code": "DM",
+      "name": "Dominica",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇩🇲"
+    },
+    {
+      "code": "DO",
+      "name": "Dominican Republic",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇩🇴"
+    },
+    {
+      "code": "EC",
+      "name": "Ecuador",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇪🇨"
+    },
+    {
+      "code": "EG",
+      "name": "Egypt",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇪🇬"
+    },
+    {
+      "code": "SV",
+      "name": "El Salvador",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇻"
+    },
+    {
+      "code": "GQ",
+      "name": "Equatorial Guinea",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇶"
+    },
+    {
+      "code": "ER",
+      "name": "Eritrea",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇪🇷"
+    },
+    {
+      "code": "EE",
+      "name": "Estonia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇪🇪"
+    },
+    {
+      "code": "SZ",
+      "name": "Eswatini",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇿"
+    },
+    {
+      "code": "ET",
+      "name": "Ethiopia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇪🇹"
+    },
+    {
+      "code": "FK",
+      "name": "Falkland Islands (Malvinas)",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇫🇰"
+    },
+    {
+      "code": "FO",
+      "name": "Faroe Islands",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇫🇴"
+    },
+    {
+      "code": "FJ",
+      "name": "Fiji",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇫🇯"
+    },
+    {
+      "code": "FI",
+      "name": "Finland",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇫🇮"
+    },
+    {
+      "code": "FR",
+      "name": "France",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇫🇷"
+    },
+    {
+      "code": "GF",
+      "name": "French Guiana",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇫"
+    },
+    {
+      "code": "PF",
+      "name": "French Polynesia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇵🇫"
+    },
+    {
+      "code": "TF",
+      "name": "French Southern Territories",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇫"
+    },
+    {
+      "code": "GA",
+      "name": "Gabon",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇦"
+    },
+    {
+      "code": "GM",
+      "name": "Gambia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇲"
+    },
+    {
+      "code": "GE",
+      "name": "Georgia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇪"
+    },
+    {
+      "code": "DE",
+      "name": "Germany",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇩🇪"
+    },
+    {
+      "code": "GH",
+      "name": "Ghana",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇭"
+    },
+    {
+      "code": "GI",
+      "name": "Gibraltar",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇮"
+    },
+    {
+      "code": "GR",
+      "name": "Greece",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇷"
+    },
+    {
+      "code": "GL",
+      "name": "Greenland",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇱"
+    },
+    {
+      "code": "GD",
+      "name": "Grenada",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇩"
+    },
+    {
+      "code": "GP",
+      "name": "Guadeloupe",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇵"
+    },
+    {
+      "code": "GU",
+      "name": "Guam",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇺"
+    },
+    {
+      "code": "GT",
+      "name": "Guatemala",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇹"
+    },
+    {
+      "code": "GG",
+      "name": "Guernsey",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇬"
+    },
+    {
+      "code": "GN",
+      "name": "Guinea",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇳"
+    },
+    {
+      "code": "GW",
+      "name": "Guinea-Bissau",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇼"
+    },
+    {
+      "code": "GY",
+      "name": "Guyana",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇾"
+    },
+    {
+      "code": "HT",
+      "name": "Haiti",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇭🇹"
+    },
+    {
+      "code": "HM",
+      "name": "Heard Island and McDonald Islands",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇭🇲"
+    },
+    {
+      "code": "VA",
+      "name": "Holy See (Vatican City State)",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇻🇦"
+    },
+    {
+      "code": "HN",
+      "name": "Honduras",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇭🇳"
+    },
+    {
+      "code": "HK",
+      "name": "Hong Kong",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇭🇰"
+    },
+    {
+      "code": "HU",
+      "name": "Hungary",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇭🇺"
+    },
+    {
+      "code": "IS",
+      "name": "Iceland",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇮🇸"
+    },
+    {
+      "code": "IN",
+      "name": "India",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇮🇳"
+    },
+    {
+      "code": "ID",
+      "name": "Indonesia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇮🇩"
+    },
+    {
+      "code": "IR",
+      "name": "Iran, Islamic Republic of",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇮🇷"
+    },
+    {
+      "code": "IQ",
+      "name": "Iraq",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇮🇶"
+    },
+    {
+      "code": "IE",
+      "name": "Ireland",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇮🇪"
+    },
+    {
+      "code": "IM",
+      "name": "Isle of Man",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇮🇲"
+    },
+    {
+      "code": "IL",
+      "name": "Israel",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇮🇱"
+    },
+    {
+      "code": "IT",
+      "name": "Italy",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇮🇹"
+    },
+    {
+      "code": "JM",
+      "name": "Jamaica",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇯🇲"
+    },
+    {
+      "code": "JP",
+      "name": "Japan",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇯🇵"
+    },
+    {
+      "code": "JE",
+      "name": "Jersey",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇯🇪"
+    },
+    {
+      "code": "JO",
+      "name": "Jordan",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇯🇴"
+    },
+    {
+      "code": "KZ",
+      "name": "Kazakhstan",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇰🇿"
+    },
+    {
+      "code": "KE",
+      "name": "Kenya",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇰🇪"
+    },
+    {
+      "code": "KI",
+      "name": "Kiribati",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇰🇮"
+    },
+    {
+      "code": "KP",
+      "name": "Korea, Democratic People's Republic of",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇰🇵"
+    },
+    {
+      "code": "KR",
+      "name": "Korea, Republic of",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇰🇷"
+    },
+    {
+      "code": "KW",
+      "name": "Kuwait",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇰🇼"
+    },
+    {
+      "code": "KG",
+      "name": "Kyrgyzstan",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇰🇬"
+    },
+    {
+      "code": "LA",
+      "name": "Lao People's Democratic Republic",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇱🇦"
+    },
+    {
+      "code": "LV",
+      "name": "Latvia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇱🇻"
+    },
+    {
+      "code": "LB",
+      "name": "Lebanon",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇱🇧"
+    },
+    {
+      "code": "LS",
+      "name": "Lesotho",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇱🇸"
+    },
+    {
+      "code": "LR",
+      "name": "Liberia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇱🇷"
+    },
+    {
+      "code": "LY",
+      "name": "Libya",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇱🇾"
+    },
+    {
+      "code": "LI",
+      "name": "Liechtenstein",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇱🇮"
+    },
+    {
+      "code": "LT",
+      "name": "Lithuania",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇱🇹"
+    },
+    {
+      "code": "LU",
+      "name": "Luxembourg",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇱🇺"
+    },
+    {
+      "code": "MO",
+      "name": "Macao",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇴"
+    },
+    {
+      "code": "MG",
+      "name": "Madagascar",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇬"
+    },
+    {
+      "code": "MW",
+      "name": "Malawi",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇼"
+    },
+    {
+      "code": "MY",
+      "name": "Malaysia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇾"
+    },
+    {
+      "code": "MV",
+      "name": "Maldives",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇻"
+    },
+    {
+      "code": "ML",
+      "name": "Mali",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇱"
+    },
+    {
+      "code": "MT",
+      "name": "Malta",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇹"
+    },
+    {
+      "code": "MH",
+      "name": "Marshall Islands",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇭"
+    },
+    {
+      "code": "MQ",
+      "name": "Martinique",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇶"
+    },
+    {
+      "code": "MR",
+      "name": "Mauritania",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇷"
+    },
+    {
+      "code": "MU",
+      "name": "Mauritius",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇺"
+    },
+    {
+      "code": "YT",
+      "name": "Mayotte",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇾🇹"
+    },
+    {
+      "code": "MX",
+      "name": "Mexico",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇽"
+    },
+    {
+      "code": "FM",
+      "name": "Micronesia, Federated States of",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇫🇲"
+    },
+    {
+      "code": "MD",
+      "name": "Moldova, Republic of",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇩"
+    },
+    {
+      "code": "MC",
+      "name": "Monaco",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇨"
+    },
+    {
+      "code": "MN",
+      "name": "Mongolia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇳"
+    },
+    {
+      "code": "ME",
+      "name": "Montenegro",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇪"
+    },
+    {
+      "code": "MS",
+      "name": "Montserrat",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇸"
+    },
+    {
+      "code": "MA",
+      "name": "Morocco",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇦"
+    },
+    {
+      "code": "MZ",
+      "name": "Mozambique",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇿"
+    },
+    {
+      "code": "MM",
+      "name": "Myanmar",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇲"
+    },
+    {
+      "code": "NA",
+      "name": "Namibia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇳🇦"
+    },
+    {
+      "code": "NR",
+      "name": "Nauru",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇳🇷"
+    },
+    {
+      "code": "NP",
+      "name": "Nepal",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇳🇵"
+    },
+    {
+      "code": "NL",
+      "name": "Netherlands",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇳🇱"
+    },
+    {
+      "code": "NC",
+      "name": "New Caledonia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇳🇨"
+    },
+    {
+      "code": "NZ",
+      "name": "New Zealand",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇳🇿"
+    },
+    {
+      "code": "NI",
+      "name": "Nicaragua",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇳🇮"
+    },
+    {
+      "code": "NE",
+      "name": "Niger",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇳🇪"
+    },
+    {
+      "code": "NG",
+      "name": "Nigeria",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇳🇬"
+    },
+    {
+      "code": "NU",
+      "name": "Niue",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇳🇺"
+    },
+    {
+      "code": "NF",
+      "name": "Norfolk Island",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇳🇫"
+    },
+    {
+      "code": "MK",
+      "name": "North Macedonia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇰"
+    },
+    {
+      "code": "MP",
+      "name": "Northern Mariana Islands",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇵"
+    },
+    {
+      "code": "NO",
+      "name": "Norway",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇳🇴"
+    },
+    {
+      "code": "OM",
+      "name": "Oman",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇴🇲"
+    },
+    {
+      "code": "PK",
+      "name": "Pakistan",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇵🇰"
+    },
+    {
+      "code": "PW",
+      "name": "Palau",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇵🇼"
+    },
+    {
+      "code": "PS",
+      "name": "Palestine, State of",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇵🇸"
+    },
+    {
+      "code": "PA",
+      "name": "Panama",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇵🇦"
+    },
+    {
+      "code": "PG",
+      "name": "Papua New Guinea",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇵🇬"
+    },
+    {
+      "code": "PY",
+      "name": "Paraguay",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇵🇾"
+    },
+    {
+      "code": "PE",
+      "name": "Peru",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇵🇪"
+    },
+    {
+      "code": "PH",
+      "name": "Philippines",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇵🇭"
+    },
+    {
+      "code": "PN",
+      "name": "Pitcairn",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇵🇳"
+    },
+    {
+      "code": "PL",
+      "name": "Poland",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇵🇱"
+    },
+    {
+      "code": "PT",
+      "name": "Portugal",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇵🇹"
+    },
+    {
+      "code": "PR",
+      "name": "Puerto Rico",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇵🇷"
+    },
+    {
+      "code": "QA",
+      "name": "Qatar",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇶🇦"
+    },
+    {
+      "code": "RO",
+      "name": "Romania",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇷🇴"
+    },
+    {
+      "code": "RU",
+      "name": "Russian Federation",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇷🇺"
+    },
+    {
+      "code": "RW",
+      "name": "Rwanda",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇷🇼"
+    },
+    {
+      "code": "RE",
+      "name": "Réunion",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇷🇪"
+    },
+    {
+      "code": "BL",
+      "name": "Saint Barthélemy",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇧🇱"
+    },
+    {
+      "code": "SH",
+      "name": "Saint Helena, Ascension and Tristan da Cunha",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇭"
+    },
+    {
+      "code": "KN",
+      "name": "Saint Kitts and Nevis",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇰🇳"
+    },
+    {
+      "code": "LC",
+      "name": "Saint Lucia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇱🇨"
+    },
+    {
+      "code": "MF",
+      "name": "Saint Martin (French part)",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇲🇫"
+    },
+    {
+      "code": "PM",
+      "name": "Saint Pierre and Miquelon",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇵🇲"
+    },
+    {
+      "code": "VC",
+      "name": "Saint Vincent and the Grenadines",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇻🇨"
+    },
+    {
+      "code": "WS",
+      "name": "Samoa",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇼🇸"
+    },
+    {
+      "code": "SM",
+      "name": "San Marino",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇲"
+    },
+    {
+      "code": "ST",
+      "name": "Sao Tome and Principe",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇹"
+    },
+    {
+      "code": "SA",
+      "name": "Saudi Arabia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇦"
+    },
+    {
+      "code": "SN",
+      "name": "Senegal",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇳"
+    },
+    {
+      "code": "RS",
+      "name": "Serbia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇷🇸"
+    },
+    {
+      "code": "SC",
+      "name": "Seychelles",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇨"
+    },
+    {
+      "code": "SL",
+      "name": "Sierra Leone",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇱"
+    },
+    {
+      "code": "SG",
+      "name": "Singapore",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇬"
+    },
+    {
+      "code": "SX",
+      "name": "Sint Maarten (Dutch part)",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇽"
+    },
+    {
+      "code": "SK",
+      "name": "Slovakia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇰"
+    },
+    {
+      "code": "SI",
+      "name": "Slovenia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇮"
+    },
+    {
+      "code": "SB",
+      "name": "Solomon Islands",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇧"
+    },
+    {
+      "code": "SO",
+      "name": "Somalia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇴"
+    },
+    {
+      "code": "ZA",
+      "name": "South Africa",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇿🇦"
+    },
+    {
+      "code": "GS",
+      "name": "South Georgia and the South Sandwich Islands",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇸"
+    },
+    {
+      "code": "SS",
+      "name": "South Sudan",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇸"
+    },
+    {
+      "code": "ES",
+      "name": "Spain",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇪🇸"
+    },
+    {
+      "code": "LK",
+      "name": "Sri Lanka",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇱🇰"
+    },
+    {
+      "code": "SD",
+      "name": "Sudan",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇩"
+    },
+    {
+      "code": "SR",
+      "name": "Suriname",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇷"
+    },
+    {
+      "code": "SJ",
+      "name": "Svalbard and Jan Mayen",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇯"
+    },
+    {
+      "code": "SE",
+      "name": "Sweden",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇪"
+    },
+    {
+      "code": "CH",
+      "name": "Switzerland",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇨🇭"
+    },
+    {
+      "code": "SY",
+      "name": "Syrian Arab Republic",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇸🇾"
+    },
+    {
+      "code": "TW",
+      "name": "Taiwan, Province of China",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇼"
+    },
+    {
+      "code": "TJ",
+      "name": "Tajikistan",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇯"
+    },
+    {
+      "code": "TZ",
+      "name": "Tanzania, United Republic of",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇿"
+    },
+    {
+      "code": "TH",
+      "name": "Thailand",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇭"
+    },
+    {
+      "code": "TL",
+      "name": "Timor-Leste",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇱"
+    },
+    {
+      "code": "TG",
+      "name": "Togo",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇬"
+    },
+    {
+      "code": "TK",
+      "name": "Tokelau",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇰"
+    },
+    {
+      "code": "TO",
+      "name": "Tonga",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇴"
+    },
+    {
+      "code": "TT",
+      "name": "Trinidad and Tobago",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇹"
+    },
+    {
+      "code": "TN",
+      "name": "Tunisia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇳"
+    },
+    {
+      "code": "TM",
+      "name": "Turkmenistan",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇲"
+    },
+    {
+      "code": "TC",
+      "name": "Turks and Caicos Islands",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇨"
+    },
+    {
+      "code": "TV",
+      "name": "Tuvalu",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇻"
+    },
+    {
+      "code": "TR",
+      "name": "Türkiye",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇹🇷"
+    },
+    {
+      "code": "UG",
+      "name": "Uganda",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇺🇬"
+    },
+    {
+      "code": "UA",
+      "name": "Ukraine",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇺🇦"
+    },
+    {
+      "code": "AE",
+      "name": "United Arab Emirates",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇪"
+    },
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇬🇧"
+    },
+    {
+      "code": "US",
+      "name": "United States",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇺🇸"
+    },
+    {
+      "code": "UM",
+      "name": "United States Minor Outlying Islands",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇺🇲"
+    },
+    {
+      "code": "UY",
+      "name": "Uruguay",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇺🇾"
+    },
+    {
+      "code": "UZ",
+      "name": "Uzbekistan",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇺🇿"
+    },
+    {
+      "code": "VU",
+      "name": "Vanuatu",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇻🇺"
+    },
+    {
+      "code": "VE",
+      "name": "Venezuela, Bolivarian Republic of",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇻🇪"
+    },
+    {
+      "code": "VN",
+      "name": "Viet Nam",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇻🇳"
+    },
+    {
+      "code": "VG",
+      "name": "Virgin Islands, British",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇻🇬"
+    },
+    {
+      "code": "VI",
+      "name": "Virgin Islands, U.S.",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇻🇮"
+    },
+    {
+      "code": "WF",
+      "name": "Wallis and Futuna",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇼🇫"
+    },
+    {
+      "code": "EH",
+      "name": "Western Sahara",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇪🇭"
+    },
+    {
+      "code": "YE",
+      "name": "Yemen",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇾🇪"
+    },
+    {
+      "code": "ZM",
+      "name": "Zambia",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇿🇲"
+    },
+    {
+      "code": "ZW",
+      "name": "Zimbabwe",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇿🇼"
+    },
+    {
+      "code": "AX",
+      "name": "Åland Islands",
+      "phone_code": null,
+      "currency": null,
+      "language": null,
+      "description": null,
+      "flag": "🇦🇽"
+    }
+  ]
+}

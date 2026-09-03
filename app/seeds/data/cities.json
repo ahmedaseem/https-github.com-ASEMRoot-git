@@ -1,0 +1,138 @@
+{
+  "source": "ASEM Global Seed Catalog",
+  "version": "1.0.0",
+  "cities": [
+    {
+      "country_code": "US",
+      "name": "New York",
+      "code": "NYC",
+      "description": "Major global city and international business, culture and tourism hub.",
+      "image": "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee",
+      "latitude": 40.7128,
+      "longitude": -74.0060,
+      "population": 8804190,
+      "is_active": true
+    },
+    {
+      "country_code": "GB",
+      "name": "London",
+      "code": "LON",
+      "description": "Global financial, cultural and tourism centre.",
+      "image": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "population": 8982000,
+      "is_active": true
+    },
+    {
+      "country_code": "FR",
+      "name": "Paris",
+      "code": "PAR",
+      "description": "International centre for culture, tourism, business and innovation.",
+      "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34",
+      "latitude": 48.8566,
+      "longitude": 2.3522,
+      "population": 2102650,
+      "is_active": true
+    },
+    {
+      "country_code": "JP",
+      "name": "Tokyo",
+      "code": "TYO",
+      "description": "Global technology, commerce and cultural centre.",
+      "image": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf",
+      "latitude": 35.6762,
+      "longitude": 139.6503,
+      "population": 14094034,
+      "is_active": true
+    },
+    {
+      "country_code": "AE",
+      "name": "Dubai",
+      "code": "DXB",
+      "description": "International business, tourism and logistics hub.",
+      "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c",
+      "latitude": 25.2048,
+      "longitude": 55.2708,
+      "population": 3500000,
+      "is_active": true
+    },
+    {
+      "country_code": "SG",
+      "name": "Singapore",
+      "code": "SIN",
+      "description": "Global financial, technology and logistics hub.",
+      "image": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd",
+      "latitude": 1.3521,
+      "longitude": 103.8198,
+      "population": 5921231,
+      "is_active": true
+    },
+    {
+      "country_code": "EG",
+      "name": "Cairo",
+      "code": "CAI",
+      "description": "Historic regional centre for culture, commerce and tourism.",
+      "image": "https://images.unsplash.com/photo-1568322445389-f64ac2515020",
+      "latitude": 30.0444,
+      "longitude": 31.2357,
+      "population": 10230350,
+      "is_active": true
+    },
+    {
+      "country_code": "SA",
+      "name": "Riyadh",
+      "code": "RUH",
+      "description": "Major Middle Eastern business, government and technology hub.",
+      "image": "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6",
+      "latitude": 24.7136,
+      "longitude": 46.6753,
+      "population": 7000000,
+      "is_active": true
+    },
+    {
+      "country_code": "IN",
+      "name": "Mumbai",
+      "code": "BOM",
+      "description": "Major Indian financial, commercial and entertainment centre.",
+      "image": "https://images.unsplash.com/photo-1529253355930-ddbe423a2ac7",
+      "latitude": 19.0760,
+      "longitude": 72.8777,
+      "population": 20667656,
+      "is_active": true
+    },
+    {
+      "country_code": "AU",
+      "name": "Sydney",
+      "code": "SYD",
+      "description": "International Australian city known for business, culture and tourism.",
+      "image": "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d8",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "population": 5312163,
+      "is_active": true
+    },
+    {
+      "country_code": "BR",
+      "name": "São Paulo",
+      "code": "SAO",
+      "description": "Major Latin American centre for finance, commerce and innovation.",
+      "image": "https://images.unsplash.com/photo-1483729558449-99ef09a8c325",
+      "latitude": -23.5505,
+      "longitude": -46.6333,
+      "population": 12300000,
+      "is_active": true
+    },
+    {
+      "country_code": "CA",
+      "name": "Toronto",
+      "code": "YYZ",
+      "description": "Major Canadian financial, technology and multicultural centre.",
+      "image": "https://images.unsplash.com/photo-1517090504586-fde19ea6066f",
+      "latitude": 43.6532,
+      "longitude": -79.3832,
+      "population": 2794356,
+      "is_active": true
+    }
+  ]
+}

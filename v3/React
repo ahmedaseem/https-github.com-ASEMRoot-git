@@ -1,0 +1,9 @@
+import logo from "./assets/asem-logo.png";
+
+function App() {
+  return (
+    <img src={logo} alt="ASEM Logo" />
+  );
+}
+
+export default App;

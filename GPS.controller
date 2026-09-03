@@ -1,0 +1,229 @@
+async function activateGPS() {
+
+    if (!navigator.geolocation) {
+
+        alert(
+            "Geolocation is not supported by this browser."
+        );
+
+        return;
+    }
+
+
+    const button =
+        document.getElementById(
+            "gpsButton"
+        );
+
+
+    if (button) {
+        button.setAttribute(
+            "aria-busy",
+            "true"
+        );
+    }
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        async position => {
+
+            const {
+                latitude,
+                longitude,
+                accuracy
+            } = position.coords;
+
+
+            ASEM.state.location = {
+                latitude,
+                longitude,
+                accuracy
+            };
+
+
+            document.dispatchEvent(
+                new CustomEvent(
+                    "asem:locationchange",
+                    {
+                        detail:
+                            ASEM.state.location
+                    }
+                )
+            );
+
+
+            const type =
+                document.getElementById(
+                    "searchType"
+                )?.value || "all";
+
+
+            const radius =
+                Number(
+                    document.getElementById(
+                        "radiusKm"
+                    )?.value || 25
+                );
+
+
+            try {
+
+                const params =
+                    new URLSearchParams({
+                        lat,
+                        lon: longitude,
+                        radiusKm: radius,
+                        type
+                    });
+
+
+                const response =
+                    await fetch(
+                        `/api/nearby?${params}`,
+                        {
+                            headers: {
+                                Accept:
+                                    "application/json"
+                            }
+                        }
+                    );
+
+
+                if (!response.ok) {
+                    throw new Error(
+                        `HTTP ${response.status}`
+                    );
+                }
+
+
+                const results =
+                    await response.json();
+
+
+                ASEM.state.lastResults =
+                    results;
+
+
+                const grid =
+                    document.getElementById(
+                        "searchResults"
+                    );
+
+
+                if (!grid) {
+                    return;
+                }
+
+
+                if (!results.length) {
+
+                    grid.innerHTML = `
+                        <article
+                            class="card platform-state">
+
+                            <div
+                                class="platform-card-icon">
+                                📍
+                            </div>
+
+                            <h3>
+                                Nothing nearby
+                            </h3>
+
+                            <p>
+                                No platform records
+                                were found within
+                                ${radius} km.
+                            </p>
+
+                        </article>
+                    `;
+
+                    return;
+                }
+
+
+                grid.innerHTML =
+                    results
+                        .map(
+                            buildUnifiedResultCard
+                        )
+                        .join("");
+
+
+                const section =
+                    grid.closest("section");
+
+
+                if (section) {
+
+                    section.hidden = false;
+
+                    section.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }
+
+            }
+            catch (error) {
+
+                console.error(
+                    "ASEM GPS search:",
+                    error
+                );
+
+                alert(
+                    "Your location was received, but the nearby search failed."
+                );
+
+            }
+            finally {
+
+                if (button) {
+                    button.removeAttribute(
+                        "aria-busy"
+                    );
+                }
+            }
+        },
+
+
+        error => {
+
+            if (button) {
+                button.removeAttribute(
+                    "aria-busy"
+                );
+            }
+
+
+            const messages = {
+
+                1:
+                    "Location permission was denied.",
+
+                2:
+                    "Your location could not be determined.",
+
+                3:
+                    "The location request timed out."
+            };
+
+
+            alert(
+                messages[error.code] ||
+                "Unable to obtain your location."
+            );
+        },
+
+
+        {
+            enableHighAccuracy: true,
+            timeout: 12000,
+            maximumAge: 30000
+        }
+    );
+}
+

@@ -1,0 +1,24 @@
+function rank(results,q){
+
+return results.sort(
+(a,b)=>{
+
+
+const aScore =
+a.title
+.startsWith(q)
+?10:1;
+
+
+const bScore =
+b.title
+.startsWith(q)
+?10:1;
+
+
+return bScore-aScore;
+
+
+});
+
+}

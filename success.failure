@@ -1,0 +1,15 @@
+import { OnWorkerEvent } from '@nestjs/bullmq';
+
+@OnWorkerEvent('completed')
+onCompleted(job: Job) {
+    this.logger.log(`Completed ${job.id}`);
+}
+
+@OnWorkerEvent('failed')
+onFailed(job: Job, err: Error) {
+    this.logger.error(
+        `Job ${job?.id} failed`,
+        err.stack,
+    );
+}
+

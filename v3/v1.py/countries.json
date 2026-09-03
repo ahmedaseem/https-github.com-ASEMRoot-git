@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "type": "countries",
+  "data": [
+    {
+      "id": "",
+      "names": [],
+      "continent": "",
+      "languages": [],
+      "currency": "",
+      "cities": []
+    }
+  ]
+}

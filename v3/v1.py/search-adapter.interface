@@ -1,0 +1,40 @@
+// src/search/engine/search.engine.js
+
+
+class SearchEngine {
+
+
+async index(document){
+
+throw new Error(
+"index() not implemented"
+);
+
+}
+
+
+
+async search(query){
+
+throw new Error(
+"search() not implemented"
+);
+
+}
+
+
+
+async remove(id){
+
+throw new Error(
+"remove() not implemented"
+);
+
+}
+
+
+}
+
+
+module.exports =
+SearchEngine;

@@ -1,0 +1,12 @@
+// ai/ai.js
+
+export async function askAI(message) {
+    if (!message || !message.trim()) {
+        throw new Error("AI message cannot be empty.");
+    }
+
+    // AI request will go here.
+    // This function can later call your backend AI API.
+
+    return `AI received: ${message}`;
+}

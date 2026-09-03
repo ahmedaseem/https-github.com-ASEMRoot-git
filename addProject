@@ -1,0 +1,40 @@
+function addProject() {
+    let name = prompt("اسم المشروع");
+    if (!name) return;
+
+    let version = prompt("الإصدار", "1.0");
+    let status = prompt("الحالة", "جديد");
+
+    let card = document.createElement("div");
+    card.className = "card";
+
+    let statusSpan = document.createElement("span");
+    statusSpan.className = "status";
+    statusSpan.textContent = `🆕 ${status}`;
+
+    let img = document.createElement("img");
+    img.src = "project.png";
+    img.className = "project-img";
+
+    let title = document.createElement("h2");
+    title.textContent = name;
+
+    let ver = document.createElement("p");
+    ver.innerHTML = `<strong>الإصدار:</strong> ${version}`;
+
+    let added = document.createElement("p");
+    added.textContent = "تمت إضافته بواسطة أحد مستخدمي ASEM.";
+
+    let btns = document.createElement("div");
+    btns.className = "buttons";
+
+    let view = document.createElement("a");
+    view.href = "#";
+    view.textContent = "عرض";
+
+    btns.appendChild(view);
+
+    card.append(statusSpan, img, title, ver, added, btns);
+
+    document.getElementById("projectsGrid").prepend(card);
+}

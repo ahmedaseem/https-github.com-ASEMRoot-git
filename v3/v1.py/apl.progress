@@ -1,0 +1,29 @@
+// app.js
+
+
+const {
+security
+}=require("./security");
+
+
+const auth =
+require("./middleware/auth.middleware");
+
+
+const error =
+require("./middleware/error.middleware");
+
+
+
+security(app);
+
+
+
+app.use(
+"/api/v1/auth",
+authRoutes
+);
+
+
+
+app.use(error);

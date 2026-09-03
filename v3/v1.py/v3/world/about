@@ -1,0 +1,55 @@
+# ========================================================
+# BUSINESS
+# ========================================================
+
+def page_business(self):
+
+    self.page_header(
+        self.t("business")
+    )
+
+    tk.Label(
+        self.content,
+        text="قسم الأعمال",
+        font=("Segoe UI", 18, "bold")
+    ).pack(
+        pady=30
+    )
+
+
+# ========================================================
+# TOURISM
+# ========================================================
+
+def page_tourism(self):
+
+    self.page_header(
+        self.t("tourism")
+    )
+
+    tk.Label(
+        self.content,
+        text="قسم السياحة والسفر",
+        font=("Segoe UI", 18, "bold")
+    ).pack(
+        pady=30
+    )
+
+
+# ========================================================
+# RESTAURANTS
+# ========================================================
+
+def page_restaurants(self):
+
+    self.page_header(
+        self.t("restaurants")
+    )
+
+    tk.Label(
+        self.content,
+        text="قسم المطاعم",
+        font=("Segoe UI", 18, "bold")
+    ).pack(
+        pady=30
+    )

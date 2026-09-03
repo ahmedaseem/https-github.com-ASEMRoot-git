@@ -1,0 +1,15 @@
+"""
+ASEM Global Platform
+Seed Runner
+"""
+
+from app import create_app
+from app.seeds.countries import seed_countries
+
+
+app = create_app()
+
+
+with app.app_context():
+
+    seed_countries()

@@ -1,0 +1,45 @@
+// src/security/index.js
+
+const helmet=require("helmet");
+const rateLimit=require("express-rate-limit");
+const cors=require("cors");
+
+
+exports.security=(app)=>{
+
+
+app.use(
+helmet()
+);
+
+
+
+app.use(
+cors({
+origin:
+process.env.CLIENT_URL,
+credentials:true
+})
+);
+
+
+
+app.use(
+rateLimit({
+
+windowMs:
+15*60*1000,
+
+max:
+200,
+
+message:{
+success:false,
+message:"Too many requests"
+}
+
+})
+);
+
+
+};

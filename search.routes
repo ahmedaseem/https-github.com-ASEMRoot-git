@@ -1,0 +1,26 @@
+// src/search/search.routes.js
+
+
+const router =
+require("express").Router();
+
+
+const auth =
+require("../middleware/auth.middleware");
+
+
+const {
+search
+}=require("./search.controller");
+
+
+
+router.get(
+"/",
+auth,
+search
+);
+
+
+
+module.exports=router;

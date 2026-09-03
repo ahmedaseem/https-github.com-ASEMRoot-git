@@ -1,0 +1,15 @@
+<button
+    type="button"
+    class="card platform-card"
+    data-platform-action="tourism"
+    aria-controls="tourism-section"
+>
+    <span class="platform-icon" aria-hidden="true">🏝️</span>
+
+    <h3>Tourism</h3>
+
+    <p>
+        Discover destinations, attractions and
+        experiences around the world.
+    </p>
+</button>

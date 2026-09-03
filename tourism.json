@@ -1,0 +1,70 @@
+{
+  "source": "ASEM Global Platform",
+  "version": "1.0",
+  "tourism": [
+    {
+      "city_code": "PAR",
+      "name": "Eiffel Tower",
+      "category": "Landmark",
+      "description": "One of the world's most recognizable landmarks and a major Paris tourism destination.",
+      "address": "Champ de Mars, Paris, France",
+      "image": "assets/tourism/eiffel-tower.jpg",
+      "gallery": [],
+      "latitude": 48.8584,
+      "longitude": 2.2945,
+      "opening_hours": "09:30-23:45",
+      "ticket_price": 35.00,
+      "rating": 4.8,
+      "verified": true,
+      "is_active": true
+    },
+    {
+      "city_code": "CAI",
+      "name": "Pyramids of Giza",
+      "category": "Archaeological Site",
+      "description": "Ancient monumental complex and one of the world's most important archaeological destinations.",
+      "address": "Giza, Egypt",
+      "image": "assets/tourism/pyramids-giza.jpg",
+      "gallery": [],
+      "latitude": 29.9792,
+      "longitude": 31.1342,
+      "opening_hours": "08:00-17:00",
+      "ticket_price": 25.00,
+      "rating": 4.9,
+      "verified": true,
+      "is_active": true
+    },
+    {
+      "city_code": "TYO",
+      "name": "Tokyo Skytree",
+      "category": "Landmark",
+      "description": "A major Tokyo observation and entertainment destination offering panoramic city views.",
+      "address": "1 Chome-1-2 Oshiage, Sumida City, Tokyo, Japan",
+      "image": "assets/tourism/tokyo-skytree.jpg",
+      "gallery": [],
+      "latitude": 35.7101,
+      "longitude": 139.8107,
+      "opening_hours": "10:00-21:00",
+      "ticket_price": 20.00,
+      "rating": 4.7,
+      "verified": true,
+      "is_active": true
+    },
+    {
+      "city_code": "NYC",
+      "name": "Statue of Liberty",
+      "category": "Landmark",
+      "description": "Historic monument and internationally recognized symbol of New York and the United States.",
+      "address": "New York, NY, USA",
+      "image": "assets/tourism/statue-of-liberty.jpg",
+      "gallery": [],
+      "latitude": 40.6892,
+      "longitude": -74.0445,
+      "opening_hours": "09:00-17:00",
+      "ticket_price": 25.00,
+      "rating": 4.8,
+      "verified": true,
+      "is_active": true
+    }
+  ]
+}

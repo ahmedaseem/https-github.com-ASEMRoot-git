@@ -1,0 +1,194 @@
+app.get("/api/nearby", async (req, res) => {
+
+    const lat = Number(req.query.lat);
+    const lon = Number(req.query.lon);
+
+    const radiusKm = Math.min(
+        200,
+        Math.max(
+            0.1,
+            Number(req.query.radiusKm || 25)
+        )
+    );
+
+    const type =
+        String(req.query.type || "all");
+
+
+    if (
+        !Number.isFinite(lat) ||
+        !Number.isFinite(lon) ||
+        lat < -90 ||
+        lat > 90 ||
+        lon < -180 ||
+        lon > 180
+    ) {
+
+        return res.status(400).json({
+            message:
+                "Valid latitude and longitude are required."
+        });
+    }
+
+
+    const distanceExpression = `
+        6371 * 2 * ASIN(
+            SQRT(
+                POWER(
+                    SIN(
+                        RADIANS(
+                            CAST(latitude AS double precision)
+                            - $2
+                        ) / 2
+                    ),
+                    2
+                )
+                +
+                COS(RADIANS($2))
+                *
+                COS(
+                    RADIANS(
+                        CAST(latitude AS double precision)
+                    )
+                )
+                *
+                POWER(
+                    SIN(
+                        RADIANS(
+                            CAST(longitude AS double precision)
+                            - $3
+                        ) / 2
+                    ),
+                    2
+                )
+            )
+        )
+    `;
+
+
+    const sources = {
+
+        tourism: `
+            SELECT
+                id,
+                name,
+                description,
+                category,
+                location,
+                latitude,
+                longitude,
+                image,
+                rating,
+                'tourism' AS type
+            FROM tourism
+            WHERE latitude IS NOT NULL
+              AND longitude IS NOT NULL
+        `,
+
+        businesses: `
+            SELECT
+                id,
+                name,
+                description,
+                category,
+                address,
+                latitude,
+                longitude,
+                logo,
+                cover_image,
+                rating,
+                'business' AS type
+            FROM businesses
+            WHERE latitude IS NOT NULL
+              AND longitude IS NOT NULL
+        `,
+
+        products: `
+            SELECT
+                id,
+                name,
+                description,
+                category,
+                price,
+                currency,
+                image,
+                latitude,
+                longitude,
+                'product' AS type
+            FROM products
+            WHERE latitude IS NOT NULL
+              AND longitude IS NOT NULL
+        `
+    };
+
+
+    let selected;
+
+    if (type === "tourism") {
+        selected = [sources.tourism];
+    }
+    else if (type === "businesses") {
+        selected = [sources.businesses];
+    }
+    else if (type === "products") {
+        selected = [sources.products];
+    }
+    else {
+        selected = Object.values(sources);
+    }
+
+
+    try {
+
+        const sql = `
+            SELECT
+                nearby.*,
+                ${distanceExpression}
+                    AS distance_km
+
+            FROM (
+                ${selected.join(" UNION ALL ")}
+            ) nearby
+
+            WHERE
+                nearby.latitude IS NOT NULL
+                AND nearby.longitude IS NOT NULL
+
+            AND
+                ${distanceExpression}
+                <= $1
+
+            ORDER BY
+                distance_km ASC
+
+            LIMIT 200
+        `;
+
+
+        const result =
+            await pool.query(
+                sql,
+                [
+                    radiusKm,
+                    lat,
+                    lon
+                ]
+            );
+
+
+        res.json(result.rows);
+
+    }
+    catch (error) {
+
+        console.error(
+            "Nearby search error:",
+            error
+        );
+
+        res.status(500).json({
+            message:
+                "Nearby search failed."
+        });
+    }
+});

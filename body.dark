@@ -1,0 +1,17 @@
+body.dark{
+background:#111;
+color:#eee;
+}
+
+body.dark .card{
+background:#222;
+color:#eee;
+}
+
+body.dark .card p{
+color:#ccc;
+}
+
+body.dark header{
+background:#000;
+}

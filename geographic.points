@@ -1,0 +1,8 @@
+ALTER TABLE businesses
+ADD COLUMN location_point geography(Point, 4326);
+
+ALTER TABLE tourism
+ADD COLUMN location_point geography(Point, 4326);
+
+ALTER TABLE products
+ADD COLUMN location_point geography(Point, 4326);

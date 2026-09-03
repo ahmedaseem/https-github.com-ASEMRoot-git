@@ -1,0 +1,87 @@
+// src/search/search.service.js
+
+const User =
+require("../models/User");
+
+
+exports.globalSearch =
+async(query)=>{
+
+
+const {
+q,
+page=1,
+limit=20
+}=query;
+
+
+
+if(!q)
+return {
+results:[],
+pagination:{
+page,
+limit,
+total:0
+}
+};
+
+
+
+const regex =
+new RegExp(q,"i");
+
+
+
+const users =
+await User.find({
+
+$or:[
+
+{
+name:regex
+},
+
+{
+email:regex
+}
+
+]
+
+})
+.select("-password")
+.limit(Number(limit));
+
+
+
+return {
+
+results:[
+
+...users.map(user=>({
+
+type:"USER",
+
+id:user._id,
+
+title:user.name,
+
+data:user
+
+}))
+
+],
+
+
+pagination:{
+
+page:Number(page),
+
+limit:Number(limit)
+
+}
+
+};
+
+
+};

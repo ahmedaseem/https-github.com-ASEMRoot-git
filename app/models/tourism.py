@@ -1,0 +1,136 @@
+
+"""
+ASEM Global Platform
+Tourism Model
+"""
+
+from app.extensions import db
+
+
+class Tourism(db.Model):
+
+    __tablename__ = "tourism"
+
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+
+    city_id = db.Column(
+        db.Integer,
+        db.ForeignKey("cities.id"),
+        nullable=False,
+        index=True
+    )
+
+
+    name = db.Column(
+        db.String(150),
+        nullable=False
+    )
+
+
+    category = db.Column(
+        db.String(100),
+        nullable=False
+    )
+
+
+    description = db.Column(
+        db.Text
+    )
+
+
+    address = db.Column(
+        db.String(255)
+    )
+
+
+    image = db.Column(
+        db.String(255)
+    )
+
+
+    gallery = db.Column(
+        db.JSON
+    )
+
+
+    latitude = db.Column(
+        db.Float
+    )
+
+
+    longitude = db.Column(
+        db.Float
+    )
+
+
+    opening_hours = db.Column(
+        db.String(255)
+    )
+
+
+    ticket_price = db.Column(
+        db.Float
+    )
+
+
+    rating = db.Column(
+        db.Float,
+        default=0
+    )
+
+
+    verified = db.Column(
+        db.Boolean,
+        default=False
+    )
+
+
+    is_active = db.Column(
+        db.Boolean,
+        default=True
+    )
+
+
+    created_at = db.Column(
+        db.DateTime,
+        server_default=db.func.now()
+    )
+
+
+    updated_at = db.Column(
+        db.DateTime,
+        server_default=db.func.now(),
+        onupdate=db.func.now()
+    )
+
+
+    city = db.relationship(
+        "City",
+        back_populates="tourism_places"
+    )
+
+
+    def to_dict(self):
+
+        return {
+            "id": self.id,
+            "city_id": self.city_id,
+            "name": self.name,
+            "category": self.category,
+            "description": self.description,
+            "address": self.address,
+            "image": self.image,
+            "gallery": self.gallery,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "opening_hours": self.opening_hours,
+            "ticket_price": self.ticket_price,
+            "rating": self.rating,
+            "verified": self.verified,
+            "is_active": self.is_active
+        }

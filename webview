@@ -1,0 +1,81 @@
+package com.example.myapp
+
+import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.os.Bundle
+import android.webkit.*
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var webView: WebView
+
+    @SuppressLint("SetJavaScriptEnabled")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        webView = WebView(this)
+
+        setContentView(webView)
+
+        val settings = webView.settings
+
+        settings.javaScriptEnabled = true
+        settings.domStorageEnabled = true
+        settings.allowFileAccess = true
+        settings.loadsImagesAutomatically = true
+
+        // تحسين العرض
+        settings.useWideViewPort = true
+        settings.loadWithOverviewMode = true
+
+        // التعامل مع الروابط داخل التطبيق
+        webView.webViewClient = object : WebViewClient() {
+
+            override fun onPageStarted(
+                view: WebView?,
+                url: String?,
+                favicon: Bitmap?
+            ) {
+                super.onPageStarted(view, url, favicon)
+            }
+
+            override fun onReceivedError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                error: WebResourceError?
+            ) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "حدث خطأ في تحميل الصفحة",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        // السماح بالـ JavaScript بشكل آمن
+        webView.webChromeClient = WebChromeClient()
+
+        // تحميل مشروعك
+        webView.loadUrl(
+            "https://your-domain.com"
+        )
+    }
+
+
+    // زر الرجوع يعمل داخل الموقع
+    override fun onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+
+    override fun onDestroy() {
+        webView.destroy()
+        super.onDestroy()
+    }
+}

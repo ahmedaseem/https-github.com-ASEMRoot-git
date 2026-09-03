@@ -1,0 +1,68 @@
+<!-- =========================================
+     GPS / Geolocation
+     ========================================= -->
+
+<script>
+
+  // 1. Basic GPS Location Request
+  navigator.geolocation.getCurrentPosition(
+    p => console.log("GPS OK:", p.coords),
+
+    e => console.error("GPS ERROR:", e.code, e.message),
+
+    {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 0
+    }
+  );
+
+
+  // 2. GPS Error Handling
+  function handleGPSError(error) {
+    switch (error.code) {
+
+      case error.PERMISSION_DENIED:
+        console.log("User/browser denied location");
+        break;
+
+      case error.POSITION_UNAVAILABLE:
+        console.log("Location provider couldn't provide a usable position");
+        break;
+
+      case error.TIMEOUT:
+        console.log("Location request timed out");
+        break;
+    }
+  }
+
+
+  // 3. ASEM GPS - Detailed Location Logging
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      console.log("ASEM GPS: Location acquired", {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        accuracy: position.coords.accuracy
+      });
+    },
+
+    error => {
+      console.error("ASEM GPS: Geolocation failed", {
+        code: error.code,
+        message: error.message
+      });
+
+      handleGPSError(error);
+    },
+
+    {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 0
+    }
+  );
+
+</script>
+
+</body>

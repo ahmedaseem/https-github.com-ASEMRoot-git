@@ -1,0 +1,40 @@
+<section id="tourism-results" class="platform-results">
+    <div class="section-header">
+        <h2>Global Tourism</h2>
+        <p>Discover destinations and attractions around the world.</p>
+    </div>
+
+    <div
+        id="tourismGrid"
+        class="cards"
+        aria-live="polite">
+    </div>
+</section>
+
+
+<section id="businesses-results" class="platform-results">
+    <div class="section-header">
+        <h2>Global Businesses</h2>
+        <p>Explore businesses and services worldwide.</p>
+    </div>
+
+    <div
+        id="businessesGrid"
+        class="cards"
+        aria-live="polite">
+    </div>
+</section>
+
+
+<section id="products-results" class="platform-results">
+    <div class="section-header">
+        <h2>Global Products</h2>
+        <p>Discover products and services from businesses around the world.</p>
+    </div>
+
+    <div
+        id="productsGrid"
+        class="cards"
+        aria-live="polite">
+    </div>
+</section>

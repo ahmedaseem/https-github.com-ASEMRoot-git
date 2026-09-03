@@ -1,0 +1,24 @@
+{
+  "version": "1.0",
+  "type": "cities",
+  "data": [
+    {
+      "id": "CITY_ID",
+      "names": [
+        {
+          "language": "ar",
+          "value": ""
+        },
+        {
+          "language": "en",
+          "value": ""
+        }
+      ],
+      "country_id": "",
+      "location": {
+        "latitude": "",
+        "longitude": ""
+      }
+    }
+  ]
+}

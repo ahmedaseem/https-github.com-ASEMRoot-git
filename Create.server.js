@@ -1,0 +1,463 @@
+"use strict";
+
+require("dotenv").config();
+
+const express = require("express");
+const { Pool } = require("pg");
+const helmet = require("helmet");
+const cors = require("cors");
+
+const app = express();
+
+const pool = new Pool({
+    connectionString:
+        process.env.DATABASE_URL,
+
+    max: 20,
+
+    idleTimeoutMillis:
+        30000,
+
+    connectionTimeoutMillis:
+        5000
+});
+
+
+app.use(
+    helmet()
+);
+
+app.use(
+    express.json({
+        limit: "1mb"
+    })
+);
+
+app.use(
+    cors({
+        origin: true,
+        credentials: true
+    })
+);
+
+
+/* =========================================================
+   GENERIC LIST ENDPOINTS
+   ========================================================= */
+
+app.get(
+    "/api/tourism",
+    async (req, res) => {
+
+        try {
+
+            const result =
+                await pool.query(`
+                    SELECT
+                        id,
+                        name,
+                        description,
+                        category,
+                        location,
+                        latitude,
+                        longitude,
+                        image,
+                        rating
+                    FROM tourism
+                    ORDER BY created_at DESC
+                    LIMIT 500
+                `);
+
+            res.json(result.rows);
+
+        } catch (error) {
+
+            console.error(error);
+
+            res.status(500).json({
+                message:
+                    "Unable to load tourism."
+            });
+        }
+    }
+);
+
+
+app.get(
+    "/api/businesses",
+    async (req, res) => {
+
+        try {
+
+            const result =
+                await pool.query(`
+                    SELECT
+                        id,
+                        name,
+                        description,
+                        category,
+                        address,
+                        latitude,
+                        longitude,
+                        logo,
+                        cover_image,
+                        rating
+                    FROM businesses
+                    ORDER BY created_at DESC
+                    LIMIT 500
+                `);
+
+            res.json(result.rows);
+
+        } catch (error) {
+
+            console.error(error);
+
+            res.status(500).json({
+                message:
+                    "Unable to load businesses."
+            });
+        }
+    }
+);
+
+
+app.get(
+    "/api/products",
+    async (req, res) => {
+
+        try {
+
+            const result =
+                await pool.query(`
+                    SELECT
+                        id,
+                        name,
+                        description,
+                        category,
+                        price,
+                        currency,
+                        image,
+                        latitude,
+                        longitude
+                    FROM products
+                    ORDER BY created_at DESC
+                    LIMIT 500
+                `);
+
+            res.json(result.rows);
+
+        } catch (error) {
+
+            console.error(error);
+
+            res.status(500).json({
+                message:
+                    "Unable to load products."
+            });
+        }
+    }
+);
+
+
+app.get(
+    "/api/projects",
+    async (req, res) => {
+
+        try {
+
+            const result =
+                await pool.query(`
+                    SELECT
+                        id,
+                        name,
+                        description,
+                        image
+                    FROM projects
+                    ORDER BY created_at DESC
+                    LIMIT 500
+                `);
+
+            res.json(result.rows);
+
+        } catch (error) {
+
+            console.error(error);
+
+            res.status(500).json({
+                message:
+                    "Unable to load projects."
+            });
+        }
+    }
+);
+
+
+/* =========================================================
+   GLOBAL SEARCH
+   ========================================================= */
+
+app.get(
+    "/api/search",
+    async (req, res) => {
+
+        const q =
+            String(
+                req.query.q || ""
+            ).trim();
+
+        const type =
+            String(
+                req.query.type || "all"
+            );
+
+
+        if (!q) {
+
+            return res.json([]);
+        }
+
+
+        const search =
+            `%${q}%`;
+
+
+        try {
+
+            const results = [];
+
+
+            if (
+                type === "all" ||
+                type === "tourism"
+            ) {
+
+                const tourism =
+                    await pool.query(
+                        `
+                        SELECT
+                            id,
+                            name,
+                            description,
+                            category,
+                            location,
+                            latitude,
+                            longitude,
+                            image,
+                            rating,
+                            'tourism' AS type
+                        FROM tourism
+                        WHERE
+                            name ILIKE $1
+                            OR description ILIKE $1
+                            OR category ILIKE $1
+                            OR location ILIKE $1
+                        ORDER BY
+                            similarity(name, $2)
+                        DESC
+                        LIMIT 50
+                        `,
+                        [
+                            search,
+                            q
+                        ]
+                    );
+
+
+                results.push(
+                    ...tourism.rows
+                );
+            }
+
+
+            if (
+                type === "all" ||
+                type === "businesses"
+            ) {
+
+                const businesses =
+                    await pool.query(
+                        `
+                        SELECT
+                            id,
+                            name,
+                            description,
+                            category,
+                            address,
+                            latitude,
+                            longitude,
+                            logo,
+                            cover_image,
+                            rating,
+                            'business' AS type
+                        FROM businesses
+                        WHERE
+                            name ILIKE $1
+                            OR description ILIKE $1
+                            OR category ILIKE $1
+                            OR address ILIKE $1
+                        ORDER BY
+                            similarity(name, $2)
+                        DESC
+                        LIMIT 50
+                        `,
+                        [
+                            search,
+                            q
+                        ]
+                    );
+
+
+                results.push(
+                    ...businesses.rows
+                );
+            }
+
+
+            if (
+                type === "all" ||
+                type === "products"
+            ) {
+
+                const products =
+                    await pool.query(
+                        `
+                        SELECT
+                            id,
+                            name,
+                            description,
+                            category,
+                            price,
+                            currency,
+                            image,
+                            latitude,
+                            longitude,
+                            'product' AS type
+                        FROM products
+                        WHERE
+                            name ILIKE $1
+                            OR description ILIKE $1
+                            OR category ILIKE $1
+                        ORDER BY
+                            similarity(name, $2)
+                        DESC
+                        LIMIT 50
+                        `,
+                        [
+                            search,
+                            q
+                        ]
+                    );
+
+
+                results.push(
+                    ...products.rows
+                );
+            }
+
+
+            if (
+                type === "all" ||
+                type === "projects"
+            ) {
+
+                const projects =
+                    await pool.query(
+                        `
+                        SELECT
+                            id,
+                            name,
+                            description,
+                            image,
+                            'project' AS type
+                        FROM projects
+                        WHERE
+                            name ILIKE $1
+                            OR description ILIKE $1
+                        ORDER BY
+                            similarity(name, $2)
+                        DESC
+                        LIMIT 50
+                        `,
+                        [
+                            search,
+                            q
+                        ]
+                    );
+
+
+                results.push(
+                    ...projects.rows
+                );
+            }
+
+
+            res.json(results);
+
+        } catch (error) {
+
+            console.error(
+                "Search error:",
+                error
+            );
+
+
+            res.status(500).json({
+                message:
+                    "Platform search failed."
+            });
+        }
+    }
+);
+
+
+/* =========================================================
+   HEALTH
+   ========================================================= */
+
+app.get(
+    "/api/health",
+    async (req, res) => {
+
+        try {
+
+            await pool.query(
+                "SELECT 1"
+            );
+
+            res.json({
+                status: "ok",
+                database: "connected"
+            });
+
+        } catch (error) {
+
+            res.status(503).json({
+                status: "error",
+                database: "unavailable"
+            });
+        }
+    }
+);
+
+
+/* =========================================================
+   SERVER
+   ========================================================= */
+
+const port =
+    Number(
+        process.env.PORT ||
+        3000
+    );
+
+
+app.listen(
+    port,
+    () => {
+
+        console.log(
+            `ASEM API running on port ${port}`
+        );
+    }
+);

@@ -1,0 +1,33 @@
+const AuditLog =
+require("../models/AuditLog");
+
+
+
+exports.createLog =
+async(data)=>{
+
+
+return AuditLog.create({
+
+user:data.user,
+
+action:data.action,
+
+resource:data.resource,
+
+resourceId:data.resourceId,
+
+ip:data.ip,
+
+userAgent:data.userAgent,
+
+oldData:data.oldData,
+
+newData:data.newData,
+
+status:data.status
+
+});
+
+
+};

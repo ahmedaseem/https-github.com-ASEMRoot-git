@@ -1,0 +1,15 @@
+export const CONFIG = {
+  mode: "api",
+  demoDelay: 1000,
+  timeout: 5000,
+
+  api: {
+    demo: "...",
+    real: "http://127.0.0.1:3001",
+  },
+
+  storage: {
+    theme: "light",
+    language: "en"
+  }
+};

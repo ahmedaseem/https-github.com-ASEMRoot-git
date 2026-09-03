@@ -1,0 +1,64 @@
+// auth.service.js
+
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+
+exports.register = async(data)=>{
+
+ const password =
+ await bcrypt.hash(data.password,12);
+
+
+ const user = {
+   name:data.name,
+   email:data.email,
+   password
+ };
+
+
+ // database create هنا
+
+ return {
+   id:user.id,
+   email:user.email
+ };
+
+};
+
+
+
+exports.login = async(data)=>{
+
+
+// database lookup هنا
+
+
+const token =
+jwt.sign(
+ {
+  id:1,
+  email:data.email
+ },
+ process.env.JWT_SECRET,
+ {
+  expiresIn:"15m"
+ }
+);
+
+
+return {
+ accessToken:token
+};
+
+};
+
+
+
+exports.refresh = async()=>{
+
+ return {
+  accessToken:"new-token"
+ };
+
+};

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>ASEM Digital Solutions</title>
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://asemdigital.github.io/">
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.png">
+
+    <!-- SEO -->
+    <meta name="description" content="ASEM Digital Solutions - Free digital projects and custom software solutions for individuals and companies worldwide.">
+    <meta name="keywords" content="ASEM, Digital Solutions, Web Development, AI, Cloud, Software">
+    <meta name="author" content="ASEM Digital Solutions">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#00aeea">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="ASEM Digital Solutions">
+    <meta property="og:description" content="We Build The Future of Digital Solutions">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://asemdigital.github.io/assets/og-image.png">
+    <meta property="og:url" content="https://asemdigital.github.io">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ASEM Digital Solutions">
+    <meta name="twitter:description" content="Free digital projects and custom software solutions.">
+    <meta name="twitter:image" content="https://asemdigital.github.io/assets/og-image.png">
+
+    <!-- Security -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self';">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Referrer-Policy" content="strict-origin">
+
+    <!-- Preload -->
+    <link rel="preload" href="style.css" as="style">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ASEM Digital Solutions",
+      "url": "https://asemdigital.github.io",
+      "logo": "https://asemdigital.github.io/assets/og-image.png",
+      "sameAs": [
+        "https://github.com/gov-server",
+        "https://linkedin.com/company/asem-digital",
+        "https://twitter.com/asem"
+      ]
+    }
+    </script>
+</head>
+
+<body>
+
+<nav class="navbar" aria-label="Main Navigation">
+
+    <a href="index.html" class="logo">
+        <img src="assets/logos/asem-logo.png" alt="ASEM Digital Solutions">
+    </a>
+
+    <div class="nav-links">
+        <a href="#services" data-i18n="services">Services</a>
+        <a href="#projects" data-i18n="projects">Projects</a>
+        <a href="about.html" data-i18n="about">About</a>
+        <a href="contact.html" data-i18n="contact">Contact</a>
+    </div>
+
+    <div class="controls">
+
+        <input
+            type="search"
+            id="searchBox"
+            class="search-box"
+            placeholder="🔍 Search...">
+
+        <select id="langSwitch">
+            <option value="auto">Auto</option>
+            <option value="ar">العربية</option>
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="ja">日本語</option>
+        </select>
+
+        <button id="themeToggle" aria-label="Toggle Dark Mode">
+            🌙
+        </button>
+
+    </div>
+
+</nav>
+
+<header class="hero">
+    <h1 data-i18n="hero_title">ASEM Digital Solutions</h1>
+    <p data-i18n="hero_desc">
+        Free digital projects and custom software solutions for individuals and companies worldwide.
+    </p>
+
+    <a class="btn" href="#projects" data-i18n="start_project">Start Your Free Project</a>
+    <a class="btn" href="contact.html" data-i18n="contact">Contact Us</a>
+</header>
+
+<section id="services">
+    <h2 data-i18n="services">Our Services</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3 data-i18n="web_dev">Web Development</h3>
+            <p data-i18n="web_dev_desc">Modern, fast, secure websites and platforms.</p>
+        </div>
+
+        <div class="card">
+            <h3 data-i18n="ai_auto">AI & Automation</h3>
+            <p data-i18n="ai_auto_desc">Smart solutions powered by machine learning.</p>
+        </div>
+
+        <div class="card">
+            <h3 data-i18n="cloud">Cloud Solutions</h3>
+            <p data-i18n="cloud_desc">Scalable cloud infrastructure for enterprises.</p>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <h2 data-i18n="projects">Projects</h2>
+    <div class="cards" id="projectsGrid"></div>
+</section>
+
+<section id="portfolio">
+    <h2 data-i18n="portfolio">Portfolio</h2>
+    <p data-i18n="portfolio_desc">A selection of our global digital solutions.</p>
+    <div class="portfolio-grid" id="portfolioGrid"></div>
+</section>
+
+<section id="why">
+    <h2 data-i18n="why_asem">Why Choose ASEM</h2>
+
+    <ul>
+        <li data-i18n="secure">Enterprise-grade security</li>
+        <li data-i18n="modern_tech">Modern technologies</li>
+        <li data-i18n="full_solutions">Complete digital solutions</li>
+        <li data-i18n="trusted_world">Trusted in 40+ countries</li>
+    </ul>
+</section>
+
+<section id="trusted">
+    <h2 data-i18n="trusted_world">Trusted Worldwide</h2>
+    <p data-i18n="trusted_desc">Our solutions are used by companies across 40+ countries.</p>
+</section>
+
+<section id="payments">
+    <h2 data-i18n="payments">Supported Payment Methods</h2>
+
+    <div class="payments">
+        <img src="assets/visa.png" loading="lazy" alt="Visa">
+        <img src="assets/mastercard.png" loading="lazy" alt="Mastercard">
+        <img src="assets/paypal.png" loading="lazy" alt="PayPal">
+        <img src="assets/googlepay.png" loading="lazy" alt="Google Pay">
+        <img src="assets/applepay.png" loading="lazy" alt="Apple Pay">
+    </div>
+</section>
+
+<footer>
+    <div class="social">
+        <a href="https://github.com/gov-server">GitHub</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Twitter</a>
+        <a href="#">YouTube</a>
+    </div>
+
+    <p>© 2026 ASEM Digital Solutions</p>
+</footer>
+
+<button id="scrollTop">↑</button>
+
+<script src="app.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+{
+  "source": "ASEM Global Platform",
+  "version": "1.0",
+  "businesses": [
+    {
+      "code": "PAR-TOUR-001",
+      "city_code": "PAR",
+      "name": "Paris Travel Services",
+      "category": "Travel Agency",
+      "description": "Professional travel and tourism services for visitors exploring Paris and France.",
+      "address": "Paris, France",
+      "phone": "+33 1 00 00 00 00",
+      "email": "contact@example.com",
+      "website": "https://example.com",
+      "logo": "assets/businesses/paris-travel.png",
+      "cover_image": "assets/businesses/paris-travel-cover.jpg",
+      "rating": 4.7,
+      "verified": true,
+      "is_active": true
+    },
+    {
+      "code": "CAI-TRAVEL-001",
+      "city_code": "CAI",
+      "name": "Cairo Travel Services",
+      "category": "Travel Agency",
+      "description": "Travel and tourism services for visitors discovering Cairo and Egypt.",
+      "address": "Cairo, Egypt",
+      "phone": "+20 2 0000 0000",
+      "email": "contact@example.com",
+      "website": "https://example.com",
+      "logo": "assets/businesses/cairo-travel.png",
+      "cover_image": "assets/businesses/cairo-travel-cover.jpg",
+      "rating": 4.6,
+      "verified": true,
+      "is_active": true
+    },
+    {
+      "code": "TYO-TECH-001",
+      "city_code": "TYO",
+      "name": "Tokyo Digital Market",
+      "category": "Technology",
+      "description": "Technology products and digital services for individuals and businesses.",
+      "address": "Tokyo, Japan",
+      "phone": "+81 3 0000 0000",
+      "email": "contact@example.com",
+      "website": "https://example.com",
+      "logo": "assets/businesses/tokyo-digital.png",
+      "cover_image": "assets/businesses/tokyo-digital-cover.jpg",
+      "rating": 4.8,
+      "verified": true,
+      "is_active": true
+    }
+  ]
+}

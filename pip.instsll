@@ -1,0 +1,1457 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import os
+import json
+import webbrowser
+import subprocess
+import platform
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
+
+
+# ============================================================
+# ASEM Digital Solutions
+# Professional Desktop Application
+# ============================================================
+
+APP_NAME = "ASEM Digital Solutions"
+CONFIG_FILE = os.path.join(
+    os.path.expanduser("~"),
+    ".asem_digital_solutions.json"
+)
+
+
+class ASEMApp:
+
+    # ========================================================
+    # INIT
+    # ========================================================
+
+    def __init__(self):
+
+        self.root = tk.Tk()
+        self.root.title(APP_NAME)
+        self.root.geometry("1200x760")
+        self.root.minsize(900, 600)
+
+        self.current_lang = "ar"
+        self.dark_mode = False
+        self.current_page = "home"
+
+        self.colors = {}
+
+        self.load_settings()
+
+        self.translations = {
+
+            "ar": {
+                "home": "الرئيسية",
+                "files": "الملفات",
+                "settings": "الإعدادات",
+                "notes": "الملاحظات",
+                "music": "الموسيقى",
+                "browser": "المتصفح",
+                "services": "الخدمات",
+                "projects": "المشاريع",
+                "about": "عن الشركة",
+                "contact": "تواصل معنا",
+                "dark": "الوضع الليلي",
+                "light": "الوضع النهاري",
+                "language": "اللغة",
+                "save": "حفظ",
+                "open": "فتح",
+                "new": "جديد",
+                "browse": "فتح المتصفح",
+                "url": "رابط الموقع",
+                "play": "تشغيل",
+                "stop": "إيقاف",
+                "select_music": "اختيار ملف صوتي",
+                "welcome": "مرحبًا بك في ASEM Digital Solutions",
+                "subtitle": "حلول رقمية وبرمجية حديثة",
+                "choose": "اختر إحدى الأدوات من القائمة",
+                "file_manager": "مدير الملفات",
+                "notes_title": "الملاحظات",
+                "browser_title": "المتصفح",
+                "music_title": "مشغل الموسيقى",
+                "settings_title": "الإعدادات",
+                "language_title": "اختر اللغة",
+                "theme": "المظهر",
+                "saved": "تم الحفظ بنجاح",
+                "opened": "تم فتح الملف",
+                "about_text": "ASEM Digital Solutions تقدم حلولًا رقمية وبرمجية للأفراد والشركات.",
+                "contact_text": "للتواصل معنا استخدم صفحة التواصل الخاصة بالمشروع.",
+                "file_selected": "الملف المحدد:",
+            },
+
+            "en": {
+                "home": "Home",
+                "files": "Files",
+                "settings": "Settings",
+                "notes": "Notes",
+                "music": "Music",
+                "browser": "Browser",
+                "services": "Services",
+                "projects": "Projects",
+                "about": "About",
+                "contact": "Contact",
+                "dark": "Dark Mode",
+                "light": "Light Mode",
+                "language": "Language",
+                "save": "Save",
+                "open": "Open",
+                "new": "New",
+                "browse": "Open Browser",
+                "url": "Website URL",
+                "play": "Play",
+                "stop": "Stop",
+                "select_music": "Select Audio File",
+                "welcome": "Welcome to ASEM Digital Solutions",
+                "subtitle": "Modern Digital & Software Solutions",
+                "choose": "Choose a tool from the menu",
+                "file_manager": "File Manager",
+                "notes_title": "Notes",
+                "browser_title": "Browser",
+                "music_title": "Music Player",
+                "settings_title": "Settings",
+                "language_title": "Choose Language",
+                "theme": "Theme",
+                "saved": "Saved successfully",
+                "opened": "File opened",
+                "about_text": "ASEM Digital Solutions provides digital and software solutions for individuals and businesses.",
+                "contact_text": "For contact, use the project's contact page.",
+                "file_selected": "Selected file:",
+            },
+
+            "fr": {
+                "home": "Accueil",
+                "files": "Fichiers",
+                "settings": "Paramètres",
+                "notes": "Notes",
+                "music": "Musique",
+                "browser": "Navigateur",
+                "services": "Services",
+                "projects": "Projets",
+                "about": "À propos",
+                "contact": "Contact",
+                "dark": "Mode sombre",
+                "light": "Mode clair",
+                "language": "Langue",
+                "save": "Enregistrer",
+                "open": "Ouvrir",
+                "new": "Nouveau",
+                "browse": "Ouvrir le navigateur",
+                "url": "URL du site",
+                "play": "Lire",
+                "stop": "Arrêter",
+                "select_music": "Choisir un fichier audio",
+                "welcome": "Bienvenue chez ASEM Digital Solutions",
+                "subtitle": "Solutions numériques et logicielles modernes",
+                "choose": "Choisissez un outil dans le menu",
+                "file_manager": "Gestionnaire de fichiers",
+                "notes_title": "Notes",
+                "browser_title": "Navigateur",
+                "music_title": "Lecteur musical",
+                "settings_title": "Paramètres",
+                "language_title": "Choisir la langue",
+                "theme": "Thème",
+                "saved": "Enregistré avec succès",
+                "opened": "Fichier ouvert",
+                "about_text": "ASEM Digital Solutions propose des solutions numériques et logicielles.",
+                "contact_text": "Pour nous contacter, utilisez la page de contact du projet.",
+                "file_selected": "Fichier sélectionné :",
+            },
+
+            "es": {
+                "home": "Inicio",
+                "files": "Archivos",
+                "settings": "Configuración",
+                "notes": "Notas",
+                "music": "Música",
+                "browser": "Navegador",
+                "services": "Servicios",
+                "projects": "Proyectos",
+                "about": "Acerca de",
+                "contact": "Contacto",
+                "dark": "Modo oscuro",
+                "light": "Modo claro",
+                "language": "Idioma",
+                "save": "Guardar",
+                "open": "Abrir",
+                "new": "Nuevo",
+                "browse": "Abrir navegador",
+                "url": "URL del sitio",
+                "play": "Reproducir",
+                "stop": "Detener",
+                "select_music": "Seleccionar audio",
+                "welcome": "Bienvenido a ASEM Digital Solutions",
+                "subtitle": "Soluciones digitales y de software modernas",
+                "choose": "Elige una herramienta del menú",
+                "file_manager": "Administrador de archivos",
+                "notes_title": "Notas",
+                "browser_title": "Navegador",
+                "music_title": "Reproductor de música",
+                "settings_title": "Configuración",
+                "language_title": "Elegir idioma",
+                "theme": "Tema",
+                "saved": "Guardado correctamente",
+                "opened": "Archivo abierto",
+                "about_text": "ASEM Digital Solutions ofrece soluciones digitales y de software.",
+                "contact_text": "Para contactar con nosotros, utiliza la página de contacto.",
+                "file_selected": "Archivo seleccionado:",
+            },
+
+            "de": {
+                "home": "Startseite",
+                "files": "Dateien",
+                "settings": "Einstellungen",
+                "notes": "Notizen",
+                "music": "Musik",
+                "browser": "Browser",
+                "services": "Dienste",
+                "projects": "Projekte",
+                "about": "Über uns",
+                "contact": "Kontakt",
+                "dark": "Dunkelmodus",
+                "light": "Heller Modus",
+                "language": "Sprache",
+                "save": "Speichern",
+                "open": "Öffnen",
+                "new": "Neu",
+                "browse": "Browser öffnen",
+                "url": "Website-URL",
+                "play": "Abspielen",
+                "stop": "Stoppen",
+                "select_music": "Audiodatei auswählen",
+                "welcome": "Willkommen bei ASEM Digital Solutions",
+                "subtitle": "Moderne digitale und Softwarelösungen",
+                "choose": "Wählen Sie ein Werkzeug aus dem Menü",
+                "file_manager": "Dateimanager",
+                "notes_title": "Notizen",
+                "browser_title": "Browser",
+                "music_title": "Musikplayer",
+                "settings_title": "Einstellungen",
+                "language_title": "Sprache auswählen",
+                "theme": "Design",
+                "saved": "Erfolgreich gespeichert",
+                "opened": "Datei geöffnet",
+                "about_text": "ASEM Digital Solutions bietet digitale und Softwarelösungen.",
+                "contact_text": "Für Kontakt verwenden Sie die Kontaktseite.",
+                "file_selected": "Ausgewählte Datei:",
+            },
+
+            "it": {
+                "home": "Home",
+                "files": "File",
+                "settings": "Impostazioni",
+                "notes": "Note",
+                "music": "Musica",
+                "browser": "Browser",
+                "services": "Servizi",
+                "projects": "Progetti",
+                "about": "Chi siamo",
+                "contact": "Contatti",
+                "dark": "Modalità scura",
+                "light": "Modalità chiara",
+                "language": "Lingua",
+                "save": "Salva",
+                "open": "Apri",
+                "new": "Nuovo",
+                "browse": "Apri browser",
+                "url": "URL del sito",
+                "play": "Riproduci",
+                "stop": "Ferma",
+                "select_music": "Seleziona file audio",
+                "welcome": "Benvenuto in ASEM Digital Solutions",
+                "subtitle": "Soluzioni digitali e software moderne",
+                "choose": "Scegli uno strumento dal menu",
+                "file_manager": "Gestione file",
+                "notes_title": "Note",
+                "browser_title": "Browser",
+                "music_title": "Lettore musicale",
+                "settings_title": "Impostazioni",
+                "language_title": "Scegli lingua",
+                "theme": "Tema",
+                "saved": "Salvato correttamente",
+                "opened": "File aperto",
+                "about_text": "ASEM Digital Solutions offre soluzioni digitali e software.",
+                "contact_text": "Per contattarci, utilizza la pagina contatti.",
+                "file_selected": "File selezionato:",
+            }
+        }
+
+        self.build_ui()
+        self.apply_theme()
+
+    # ========================================================
+    # TRANSLATION
+    # ========================================================
+
+    def t(self, key):
+        return self.translations[self.current_lang].get(
+            key,
+            key
+        )
+
+    # ========================================================
+    # SETTINGS
+    # ========================================================
+
+    def load_settings(self):
+
+        try:
+            if os.path.exists(CONFIG_FILE):
+                with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+
+                self.current_lang = data.get(
+                    "language",
+                    "ar"
+                )
+
+                self.dark_mode = data.get(
+                    "dark_mode",
+                    False
+                )
+
+        except Exception:
+            self.current_lang = "ar"
+            self.dark_mode = False
+
+    def save_settings(self):
+
+        data = {
+            "language": self.current_lang,
+            "dark_mode": self.dark_mode
+        }
+
+        try:
+            with open(
+                CONFIG_FILE,
+                "w",
+                encoding="utf-8"
+            ) as f:
+                json.dump(
+                    data,
+                    f,
+                    ensure_ascii=False,
+                    indent=4
+                )
+        except Exception:
+            pass
+
+    # ========================================================
+    # THEME
+    # ========================================================
+
+    def setup_colors(self):
+
+        if self.dark_mode:
+
+            self.colors = {
+                "bg": "#121212",
+                "panel": "#1e1e1e",
+                "card": "#252525",
+                "fg": "#ffffff",
+                "muted": "#bdbdbd",
+                "accent": "#4f8cff",
+                "button": "#2d2d2d",
+                "button_hover": "#3b3b3b",
+                "border": "#3a3a3a",
+                "input": "#202020"
+            }
+
+        else:
+
+            self.colors = {
+                "bg": "#f4f7fb",
+                "panel": "#ffffff",
+                "card": "#ffffff",
+                "fg": "#151515",
+                "muted": "#666666",
+                "accent": "#1769e0",
+                "button": "#eef3fa",
+                "button_hover": "#dfe9f7",
+                "border": "#d8dee8",
+                "input": "#ffffff"
+            }
+
+    def apply_theme(self):
+
+        self.setup_colors()
+
+        self.root.configure(
+            bg=self.colors["bg"]
+        )
+
+        style = ttk.Style()
+
+        try:
+            style.theme_use("clam")
+        except Exception:
+            pass
+
+        style.configure(
+            "TCombobox",
+            fieldbackground=self.colors["input"],
+            background=self.colors["button"],
+            foreground=self.colors["fg"]
+        )
+
+        self.update_widget_colors(
+            self.root
+        )
+
+    def update_widget_colors(self, widget):
+
+        try:
+
+            cls = widget.winfo_class()
+
+            if cls in ("Frame", "Labelframe"):
+                widget.configure(
+                    bg=self.colors["panel"]
+                )
+
+            elif cls == "Label":
+                widget.configure(
+                    bg=self.colors["panel"],
+                    fg=self.colors["fg"]
+                )
+
+            elif cls == "Button":
+                widget.configure(
+                    bg=self.colors["button"],
+                    fg=self.colors["fg"],
+                    activebackground=self.colors["button_hover"],
+                    activeforeground=self.colors["fg"]
+                )
+
+            elif cls == "Text":
+                widget.configure(
+                    bg=self.colors["input"],
+                    fg=self.colors["fg"],
+                    insertbackground=self.colors["fg"]
+                )
+
+            elif cls == "Entry":
+                widget.configure(
+                    bg=self.colors["input"],
+                    fg=self.colors["fg"],
+                    insertbackground=self.colors["fg"]
+                )
+
+        except Exception:
+            pass
+
+        for child in widget.winfo_children():
+
+            self.update_widget_colors(
+                child
+            )
+
+    # ========================================================
+    # MAIN UI
+    # ========================================================
+
+    def build_ui(self):
+
+        for widget in self.root.winfo_children():
+            widget.destroy()
+
+        self.main = tk.Frame(
+            self.root
+        )
+
+        self.main.pack(
+            fill="both",
+            expand=True
+        )
+
+        self.sidebar = tk.Frame(
+            self.main,
+            width=245
+        )
+
+        self.sidebar.pack(
+            side="left",
+            fill="y"
+        )
+
+        self.sidebar.pack_propagate(False)
+
+        self.content = tk.Frame(
+            self.main
+        )
+
+        self.content.pack(
+            side="right",
+            fill="both",
+            expand=True
+        )
+
+        self.build_sidebar()
+        self.show_page(
+            "home"
+        )
+
+        self.apply_theme()
+
+    # ========================================================
+    # SIDEBAR
+    # ========================================================
+
+    def build_sidebar(self):
+
+        for widget in self.sidebar.winfo_children():
+            widget.destroy()
+
+        logo = tk.Label(
+            self.sidebar,
+            text="ASEM\nDIGITAL",
+            font=("Segoe UI", 24, "bold"),
+            pady=25
+        )
+
+        logo.pack(
+            fill="x"
+        )
+
+        menu = [
+            ("🏠", "home"),
+            ("📁", "files"),
+            ("📝", "notes"),
+            ("🎵", "music"),
+            ("🌐", "browser"),
+            ("⚙️", "settings"),
+            ("💼", "services"),
+            ("🚀", "projects"),
+            ("ℹ️", "about"),
+            ("✉️", "contact"),
+        ]
+
+        for icon, key in menu:
+
+            button = tk.Button(
+                self.sidebar,
+                text=f"{icon}  {self.t(key)}",
+                font=("Segoe UI Emoji", 13),
+                anchor="w",
+                relief="flat",
+                bd=0,
+                padx=20,
+                pady=11,
+                cursor="hand2",
+                command=lambda k=key:
+                    self.show_page(k)
+            )
+
+            button.pack(
+                fill="x",
+                padx=10,
+                pady=2
+            )
+
+        bottom = tk.Frame(
+            self.sidebar
+        )
+
+        bottom.pack(
+            side="bottom",
+            fill="x",
+            pady=15
+        )
+
+        theme_text = (
+            self.t("light")
+            if self.dark_mode
+            else self.t("dark")
+        )
+
+        theme_button = tk.Button(
+            bottom,
+            text=f"🌙  {theme_text}",
+            font=("Segoe UI Emoji", 11),
+            relief="flat",
+            cursor="hand2",
+            command=self.toggle_dark_mode
+        )
+
+        theme_button.pack(
+            fill="x",
+            padx=12,
+            pady=4
+        )
+
+        lang_button = tk.Button(
+            bottom,
+            text=f"🌍  {self.t('language')}",
+            font=("Segoe UI Emoji", 11),
+            relief="flat",
+            cursor="hand2",
+            command=self.show_language_menu
+        )
+
+        lang_button.pack(
+            fill="x",
+            padx=12,
+            pady=4
+        )
+
+    # ========================================================
+    # PAGE SYSTEM
+    # ========================================================
+
+    def clear_content(self):
+
+        for widget in self.content.winfo_children():
+            widget.destroy()
+
+    def page_header(self, title, subtitle=""):
+
+        header = tk.Frame(
+            self.content
+        )
+
+        header.pack(
+            fill="x",
+            padx=35,
+            pady=(30, 10)
+        )
+
+        tk.Label(
+            header,
+            text=title,
+            font=("Segoe UI", 28, "bold")
+        ).pack(
+            anchor="w"
+        )
+
+        if subtitle:
+
+            tk.Label(
+                header,
+                text=subtitle,
+                font=("Segoe UI", 12)
+            ).pack(
+                anchor="w",
+                pady=(5, 0)
+            )
+
+    def show_page(self, page):
+
+        self.current_page = page
+
+        self.clear_content()
+
+        pages = {
+            "home": self.page_home,
+            "files": self.page_files,
+            "notes": self.page_notes,
+            "music": self.page_music,
+            "browser": self.page_browser,
+            "settings": self.page_settings,
+            "services": self.page_services,
+            "projects": self.page_projects,
+            "about": self.page_about,
+            "contact": self.page_contact,
+        }
+
+        pages.get(
+            page,
+            self.page_home
+        )()
+
+        self.apply_theme()
+
+    # ========================================================
+    # HOME
+    # ========================================================
+
+    def page_home(self):
+
+        self.page_header(
+            self.t("welcome"),
+            self.t("subtitle")
+        )
+
+        container = tk.Frame(
+            self.content
+        )
+
+        container.pack(
+            fill="both",
+            expand=True,
+            padx=35,
+            pady=25
+        )
+
+        cards = [
+            ("📁", "files"),
+            ("📝", "notes"),
+            ("🎵", "music"),
+            ("🌐", "browser"),
+            ("⚙️", "settings"),
+            ("💼", "services"),
+        ]
+
+        for index, (icon, key) in enumerate(cards):
+
+            row = index // 3
+            col = index % 3
+
+            card = tk.Frame(
+                container,
+                relief="solid",
+                bd=1,
+                padx=20,
+                pady=25
+            )
+
+            card.grid(
+                row=row,
+                column=col,
+                padx=12,
+                pady=12,
+                sticky="nsew"
+            )
+
+            container.grid_columnconfigure(
+                col,
+                weight=1
+            )
+
+            container.grid_rowconfigure(
+                row,
+                weight=1
+            )
+
+            tk.Label(
+                card,
+                text=icon,
+                font=("Segoe UI Emoji", 42)
+            ).pack()
+
+            tk.Label(
+                card,
+                text=self.t(key),
+                font=("Segoe UI", 15, "bold")
+            ).pack(
+                pady=10
+            )
+
+            tk.Button(
+                card,
+                text=self.t("open"),
+                command=lambda k=key:
+                    self.show_page(k),
+                cursor="hand2"
+            ).pack()
+
+    # ========================================================
+    # FILE MANAGER
+    # ========================================================
+
+    def page_files(self):
+
+        self.page_header(
+            self.t("file_manager")
+        )
+
+        frame = tk.Frame(
+            self.content
+        )
+
+        frame.pack(
+            fill="both",
+            expand=True,
+            padx=35,
+            pady=20
+        )
+
+        selected_label = tk.Label(
+            frame,
+            text="",
+            font=("Segoe UI", 12)
+        )
+
+        selected_label.pack(
+            pady=20
+        )
+
+        def select_file():
+
+            path = filedialog.askopenfilename()
+
+            if path:
+
+                selected_label.config(
+                    text=f"{self.t('file_selected')}\n{path}"
+                )
+
+        def select_folder():
+
+            path = filedialog.askdirectory()
+
+            if path:
+
+                selected_label.config(
+                    text=f"{self.t('file_selected')}\n{path}"
+                )
+
+        tk.Button(
+            frame,
+            text="📄 " + self.t("open"),
+            font=("Segoe UI Emoji", 13),
+            command=select_file,
+            cursor="hand2",
+            padx=20,
+            pady=10
+        ).pack(
+            pady=10
+        )
+
+        tk.Button(
+            frame,
+            text="📂 " + self.t("files"),
+            font=("Segoe UI Emoji", 13),
+            command=select_folder,
+            cursor="hand2",
+            padx=20,
+            pady=10
+        ).pack(
+            pady=10
+        )
+
+    # ========================================================
+    # NOTES
+    # ========================================================
+
+    def page_notes(self):
+
+        self.page_header(
+            self.t("notes_title")
+        )
+
+        toolbar = tk.Frame(
+            self.content
+        )
+
+        toolbar.pack(
+            fill="x",
+            padx=35,
+            pady=10
+        )
+
+        text = tk.Text(
+            self.content,
+            font=("Segoe UI", 13),
+            wrap="word",
+            padx=15,
+            pady=15
+        )
+
+        text.pack(
+            fill="both",
+            expand=True,
+            padx=35,
+            pady=10
+        )
+
+        def new_note():
+
+            text.delete(
+                "1.0",
+                "end"
+            )
+
+        def save_note():
+
+            path = filedialog.asksaveasfilename(
+                defaultextension=".txt",
+                filetypes=[
+                    ("Text files", "*.txt"),
+                    ("All files", "*.*")
+                ]
+            )
+
+            if path:
+
+                with open(
+                    path,
+                    "w",
+                    encoding="utf-8"
+                ) as f:
+
+                    f.write(
+                        text.get(
+                            "1.0",
+                            "end-1c"
+                        )
+                    )
+
+                messagebox.showinfo(
+                    APP_NAME,
+                    self.t("saved")
+                )
+
+        def open_note():
+
+            path = filedialog.askopenfilename(
+                filetypes=[
+                    ("Text files", "*.txt"),
+                    ("All files", "*.*")
+                ]
+            )
+
+            if path:
+
+                with open(
+                    path,
+                    "r",
+                    encoding="utf-8"
+                ) as f:
+
+                    content = f.read()
+
+                text.delete(
+                    "1.0",
+                    "end"
+                )
+
+                text.insert(
+                    "1.0",
+                    content
+                )
+
+        tk.Button(
+            toolbar,
+            text="🆕 " + self.t("new"),
+            command=new_note,
+            cursor="hand2"
+        ).pack(
+            side="left",
+            padx=5
+        )
+
+        tk.Button(
+            toolbar,
+            text="📂 " + self.t("open"),
+            command=open_note,
+            cursor="hand2"
+        ).pack(
+            side="left",
+            padx=5
+        )
+
+        tk.Button(
+            toolbar,
+            text="💾 " + self.t("save"),
+            command=save_note,
+            cursor="hand2"
+        ).pack(
+            side="left",
+            padx=5
+        )
+
+    # ========================================================
+    # MUSIC
+    # ========================================================
+
+    def page_music(self):
+
+        self.page_header(
+            self.t("music_title")
+        )
+
+        frame = tk.Frame(
+            self.content
+        )
+
+        frame.pack(
+            expand=True
+        )
+
+        selected = tk.StringVar(
+            value=""
+        )
+
+        tk.Label(
+            frame,
+            textvariable=selected,
+            font=("Segoe UI", 12)
+        ).pack(
+            pady=20
+        )
+
+        def choose_music():
+
+            path = filedialog.askopenfilename(
+                filetypes=[
+                    ("Audio files",
+                     "*.mp3 *.wav *.ogg *.flac"),
+                    ("All files", "*.*")
+                ]
+            )
+
+            if path:
+
+                selected.set(
+                    os.path.basename(path)
+                )
+
+                self.music_file = path
+
+        def play_music():
+
+            if not hasattr(
+                self,
+                "music_file"
+            ):
+
+                messagebox.showwarning(
+                    APP_NAME,
+                    self.t("select_music")
+                )
+
+                return
+
+            path = self.music_file
+
+            try:
+
+                system = platform.system()
+
+                if system == "Windows":
+                    os.startfile(path)
+
+                elif system == "Darwin":
+                    subprocess.Popen(
+                        ["open", path]
+                    )
+
+                else:
+                    subprocess.Popen(
+                        ["xdg-open", path]
+                    )
+
+            except Exception as e:
+
+                messagebox.showerror(
+                    APP_NAME,
+                    str(e)
+                )
+
+        tk.Button(
+            frame,
+            text="🎵 " + self.t("select_music"),
+            command=choose_music,
+            cursor="hand2",
+            padx=20,
+            pady=10
+        ).pack(
+            pady=10
+        )
+
+        tk.Button(
+            frame,
+            text="▶ " + self.t("play"),
+            command=play_music,
+            cursor="hand2",
+            padx=20,
+            pady=10
+        ).pack(
+            pady=10
+        )
+
+    # ========================================================
+    # BROWSER
+    # ========================================================
+
+    def page_browser(self):
+
+        self.page_header(
+            self.t("browser_title")
+        )
+
+        frame = tk.Frame(
+            self.content
+        )
+
+        frame.pack(
+            fill="x",
+            padx=35,
+            pady=30
+        )
+
+        url = tk.Entry(
+            frame,
+            font=("Segoe UI", 14)
+        )
+
+        url.pack(
+            fill="x",
+            pady=10
+        )
+
+        url.insert(
+            0,
+            "https://www.google.com"
+        )
+
+        def open_browser():
+
+            address = url.get().strip()
+
+            if not address.startswith(
+                ("http://", "https://")
+            ):
+
+                address = "https://" + address
+
+            webbrowser.open(
+                address
+            )
+
+        tk.Button(
+            frame,
+            text="🌐 " + self.t("browse"),
+            command=open_browser,
+            cursor="hand2",
+            padx=20,
+            pady=10
+        ).pack(
+            pady=10
+        )
+
+    # ========================================================
+    # SETTINGS
+    # ========================================================
+
+    def page_settings(self):
+
+        self.page_header(
+            self.t("settings_title")
+        )
+
+        frame = tk.Frame(
+            self.content
+        )
+
+        frame.pack(
+            fill="x",
+            padx=35,
+            pady=30
+        )
+
+        tk.Label(
+            frame,
+            text=self.t("language_title"),
+            font=("Segoe UI", 16, "bold")
+        ).pack(
+            anchor="w",
+            pady=10
+        )
+
+        languages = {
+            "ar": "🇸🇦 العربية",
+            "en": "🇬🇧 English",
+            "fr": "🇫🇷 Français",
+            "es": "🇪🇸 Español",
+            "de": "🇩🇪 Deutsch",
+            "it": "🇮🇹 Italiano",
+        }
+
+        language_var = tk.StringVar(
+            value=languages[
+                self.current_lang
+            ]
+        )
+
+        combo = ttk.Combobox(
+            frame,
+            textvariable=language_var,
+            values=list(
+                languages.values()
+            ),
+            state="readonly",
+            width=30
+        )
+
+        combo.pack(
+            anchor="w",
+            pady=10
+        )
+
+        def change_language():
+
+            selected = language_var.get()
+
+            for code, name in languages.items():
+
+                if selected == name:
+
+                    self.current_lang = code
+                    self.save_settings()
+                    self.build_ui()
+                    return
+
+        tk.Button(
+            frame,
+            text="🌍 " + self.t("language"),
+            command=change_language,
+            cursor="hand2",
+            padx=20,
+            pady=10
+        ).pack(
+            anchor="w",
+            pady=15
+        )
+
+        theme_text = (
+            self.t("light")
+            if self.dark_mode
+            else self.t("dark")
+        )
+
+        tk.Button(
+            frame,
+            text="🌙 " + theme_text,
+            command=self.toggle_dark_mode,
+            cursor="hand2",
+            padx=20,
+            pady=10
+        ).pack(
+            anchor="w",
+            pady=5
+        )
+
+    # ========================================================
+    # SERVICES
+    # ========================================================
+
+    def page_services(self):
+
+        self.page_header(
+            self.t("services")
+        )
+
+        services = [
+            ("🌐", "Web Development"),
+            ("🤖", "AI & Automation"),
+            ("☁️", "Cloud Solutions"),
+        ]
+
+        for icon, title in services:
+
+            card = tk.Frame(
+                self.content,
+                relief="solid",
+                bd=1,
+                padx=20,
+                pady=20
+            )
+
+            card.pack(
+                fill="x",
+                padx=35,
+                pady=10
+            )
+
+            tk.Label(
+                card,
+                text=f"{icon}  {title}",
+                font=("Segoe UI Emoji", 16, "bold")
+            ).pack(
+                anchor="w"
+            )
+
+    # ========================================================
+    # PROJECTS
+    # ========================================================
+
+    def page_projects(self):
+
+        self.page_header(
+            self.t("projects")
+        )
+
+        projects = [
+            "ASEM Free Platform",
+            "Digital Solutions",
+            "Custom Software",
+        ]
+
+        for project in projects:
+
+            tk.Button(
+                self.content,
+                text="🚀  " + project,
+                font=("Segoe UI", 15),
+                cursor="hand2",
+                command=lambda p=project:
+                    messagebox.showinfo(
+                        APP_NAME,
+                        p
+                    )
+            ).pack(
+                fill="x",
+                padx=35,
+                pady=10,
+                ipady=10
+            )
+
+    # ========================================================
+    # ABOUT
+    # ========================================================
+
+    def page_about(self):
+
+        self.page_header(
+            self.t("about")
+        )
+
+        tk.Label(
+            self.content,
+            text=self.t("about_text"),
+            font=("Segoe UI", 16),
+            wraplength=700,
+            justify="left"
+        ).pack(
+            padx=35,
+            pady=30
+        )
+
+    # ========================================================
+    # CONTACT
+    # ========================================================
+
+    def page_contact(self):
+
+        self.page_header(
+            self.t("contact")
+        )
+
+        tk.Label(
+            self.content,
+            text=self.t("contact_text"),
+            font=("Segoe UI", 16),
+            wraplength=700
+        ).pack(
+            padx=35,
+            pady=30
+        )
+
+        tk.Button(
+            self.content,
+            text="🌐 GitHub",
+            command=lambda:
+                webbrowser.open(
+                    "https://github.com/gov-server"
+                ),
+            cursor="hand2",
+            padx=25,
+            pady=12
+        ).pack(
+            pady=10
+        )
+
+    # ========================================================
+    # LANGUAGE MENU
+    # ========================================================
+
+    def show_language_menu(self):
+
+        menu = tk.Menu(
+            self.root,
+            tearoff=False
+        )
+
+        languages = [
+            ("🇸🇦 العربية", "ar"),
+            ("🇬🇧 English", "en"),
+            ("🇫🇷 Français", "fr"),
+            ("🇪🇸 Español", "es"),
+            ("🇩🇪 Deutsch", "de"),
+            ("🇮🇹 Italiano", "it"),
+        ]
+
+        for name, code in languages:
+
+            menu.add_command(
+                label=name,
+                command=lambda c=code:
+                    self.set_language(c)
+            )
+
+        try:
+
+            x = self.root.winfo_pointerx()
+            y = self.root.winfo_pointery()
+
+            menu.tk_popup(
+                x,
+                y
+            )
+
+        finally:
+
+            menu.grab_release()
+
+    def set_language(self, language):
+
+        self.current_lang = language
+
+        self.save_settings()
+
+        self.build_ui()
+
+    # ========================================================
+    # DARK MODE
+    # ========================================================
+
+    def toggle_dark_mode(self):
+
+        self.dark_mode = not self.dark_mode
+
+        self.save_settings()
+
+        self.build_ui()
+
+    # ========================================================
+    # CLOSE
+    # ========================================================
+
+    def on_close(self):
+
+        self.save_settings()
+
+        self.root.destroy()
+
+    # ========================================================
+    # RUN
+    # ========================================================
+
+    def run(self):
+
+        self.root.protocol(
+            "WM_DELETE_WINDOW",
+            self.on_close
+        )
+
+        self.root.mainloop()
+
+
+# ============================================================
+# MAIN
+# ============================================================
+
+def main():
+
+    app = ASEMApp()
+
+    app.run()
+
+
+if __name__ == "__main__":
+    main()

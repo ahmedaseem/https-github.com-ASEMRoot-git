@@ -1,0 +1,44 @@
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+CREATE INDEX IF NOT EXISTS tourism_name_trgm_idx
+ON tourism USING GIN (name gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS tourism_description_trgm_idx
+ON tourism USING GIN (description gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS tourism_category_trgm_idx
+ON tourism USING GIN (category gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS tourism_location_trgm_idx
+ON tourism USING GIN (location gin_trgm_ops);
+
+
+CREATE INDEX IF NOT EXISTS businesses_name_trgm_idx
+ON businesses USING GIN (name gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS businesses_description_trgm_idx
+ON businesses USING GIN (description gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS businesses_category_trgm_idx
+ON businesses USING GIN (category gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS businesses_address_trgm_idx
+ON businesses USING GIN (address gin_trgm_ops);
+
+
+CREATE INDEX IF NOT EXISTS products_name_trgm_idx
+ON products USING GIN (name gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS products_description_trgm_idx
+ON products USING GIN (description gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS products_category_trgm_idx
+ON products USING GIN (category gin_trgm_ops);
+
+
+CREATE INDEX IF NOT EXISTS projects_name_trgm_idx
+ON projects USING GIN (name gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS projects_description_trgm_idx
+ON projects USING GIN (description gin_trgm_ops);
+

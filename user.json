@@ -1,0 +1,12 @@
+{
+"name":"Ahmed Store",
+"logo":"images/logo.png",
+"description":"منتجات طبيعية",
+"products":[
+ {
+ "name":"منتج 1",
+ "image":"images/product1.jpg",
+ "price":"20$"
+ }
+]
+}

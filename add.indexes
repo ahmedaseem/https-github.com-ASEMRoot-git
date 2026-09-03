@@ -1,0 +1,12 @@
+CREATE INDEX businesses_geo_idx
+ON businesses
+USING GIST(location_point);
+
+CREATE INDEX tourism_geo_idx
+ON tourism
+USING GIST(location_point);
+
+CREATE INDEX products_geo_idx
+ON products
+USING GIST(location_point);
+

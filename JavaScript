@@ -1,0 +1,37 @@
+function normalizeArray(data) {
+
+    if (Array.isArray(data)) {
+        return data;
+    }
+
+    if (
+        !data ||
+        typeof data !== "object"
+    ) {
+        return [];
+    }
+
+    const keys = [
+
+        "data",
+        "items",
+        "results",
+        "tourism",
+        "businesses",
+        "products",
+        "projects"
+    ];
+
+    for (const key of keys) {
+
+        if (
+            Array.isArray(
+                data[key]
+            )
+        ) {
+            return data[key];
+        }
+    }
+
+    return [];
+}

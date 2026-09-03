@@ -1,0 +1,51 @@
+{
+  "source": "ASEM Global Platform",
+  "version": "1.0",
+  "products": [
+    {
+      "business_code": "PAR-TOUR-001",
+      "name": "Paris City Tour",
+      "category": "Tourism",
+      "description": "Guided city tour covering major Paris landmarks and cultural destinations.",
+      "price": 75.00,
+      "currency": "EUR",
+      "image": "assets/products/paris-city-tour.jpg",
+      "gallery": [],
+      "stock": 100,
+      "sku": "ASEM-PAR-TOUR-001",
+      "rating": 4.8,
+      "is_available": true,
+      "is_active": true
+    },
+    {
+      "business_code": "CAI-TRAVEL-001",
+      "name": "Giza Pyramids Tour",
+      "category": "Tourism",
+      "description": "Professional guided experience to the Giza Pyramids and surrounding archaeological area.",
+      "price": 60.00,
+      "currency": "USD",
+      "image": "assets/products/giza-tour.jpg",
+      "gallery": [],
+      "stock": 100,
+      "sku": "ASEM-CAI-TOUR-001",
+      "rating": 4.9,
+      "is_available": true,
+      "is_active": true
+    },
+    {
+      "business_code": "TYO-TECH-001",
+      "name": "Smart Travel Guide",
+      "category": "Digital Product",
+      "description": "Digital travel guide designed to help visitors explore Tokyo.",
+      "price": 9.99,
+      "currency": "USD",
+      "image": "assets/products/tokyo-guide.jpg",
+      "gallery": [],
+      "stock": 1000,
+      "sku": "ASEM-TYO-GUIDE-001",
+      "rating": 4.7,
+      "is_available": true,
+      "is_active": true
+    }
+  ]
+}

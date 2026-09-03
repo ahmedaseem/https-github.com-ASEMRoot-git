@@ -1,0 +1,15 @@
+<button
+    type="button"
+    class="card platform-card"
+    data-platform-action="products"
+    aria-controls="products-section"
+>
+    <span class="platform-icon" aria-hidden="true">🛒</span>
+
+    <h3>Global Products</h3>
+
+    <p>
+        Discover products and offerings
+        from businesses around the world.
+    </p>
+</button>

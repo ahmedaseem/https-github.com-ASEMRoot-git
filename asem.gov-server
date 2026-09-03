@@ -1,0 +1,19 @@
+jobs:
+  create_release_in_octopus:
+    runs-on: ubuntu-latest
+    name: Create a release in Octopus
+    steps:
+      - name: Login to Octopus
+        id: login_to_octopus
+        uses: OctopusDeploy/login@v2
+        with:
+          server: https://my.octopus.app
+          api_key: ${{ secrets.OCTOPUS_API_KEY }}
+
+      - name: Create a release in Octopus
+        id: create_a_release_in_octopus
+        uses: OctopusDeploy/create-release-action@v3
+        with:
+          space: Default
+          project: My Octopus Project
+

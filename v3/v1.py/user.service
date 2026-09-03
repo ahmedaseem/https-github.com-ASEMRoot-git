@@ -1,0 +1,123 @@
+// src/api/v1/users/user.service.js
+
+const User =
+require("../../../models/User");
+
+
+
+exports.getUsers = async(query)=>{
+
+
+const {
+page=1,
+limit=20,
+role,
+status,
+sort="-createdAt"
+}=query;
+
+
+
+const filter={};
+
+
+
+if(role)
+filter.role=role;
+
+
+
+if(status)
+filter.isActive=status;
+
+
+
+const users =
+await User.find(filter)
+.sort(sort)
+.skip(
+(page-1)*limit
+)
+.limit(Number(limit))
+.select("-password");
+
+
+
+const total =
+await User.countDocuments(filter);
+
+
+
+return {
+
+users,
+
+pagination:{
+
+page:Number(page),
+
+limit:Number(limit),
+
+total,
+
+pages:
+Math.ceil(total/limit)
+
+}
+
+};
+
+};
+
+
+
+
+
+exports.getUser =
+async(id)=>{
+
+
+return User.findById(id)
+.select("-password");
+
+
+};
+
+
+
+
+
+
+exports.updateUser =
+async(id,data)=>{
+
+
+return User.findByIdAndUpdate(
+
+id,
+
+data,
+
+{
+new:true
+}
+
+)
+.select("-password");
+
+
+};
+
+
+
+
+
+
+exports.deleteUser =
+async(id)=>{
+
+
+return User.findByIdAndDelete(id);
+
+
+};

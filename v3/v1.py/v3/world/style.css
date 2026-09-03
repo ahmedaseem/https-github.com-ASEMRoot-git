@@ -1,0 +1,77 @@
+#themeToggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--text);
+    border-radius: 50%;
+    background: var(--card);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    flex-shrink: 0;
+    opacity: 1;
+    visibility: visible;
+}
+
+#themeToggle:hover {
+    transform: scale(1.05);
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    min-width: 180px;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    background: var(--card);
+    color: var(--text);
+}
+
+#langSwitch {
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: var(--card);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.platform-card {
+    width: 100%;
+    border: 0;
+    text-align: left;
+    color: var(--text);
+    cursor: pointer;
+    font: inherit;
+}
+
+.platform-card:focus-visible,
+#themeToggle:focus-visible,
+#langSwitch:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 3px;
+}
+pages = {
+    "home": self.page_home,
+    "files": self.page_files,
+    "notes": self.page_notes,
+    "music": self.page_music,
+    "browser": self.page_browser,
+    "settings": self.page_settings,
+    "services": self.page_services,
+    "projects": self.page_projects,
+    "about": self.page_about,
+    "contact": self.page_contact,
+}
+"business": self.page_business,
+"tourism": self.page_tourism,
+"restaurants": self.page_restaurants,
