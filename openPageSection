@@ -1,0 +1,48 @@
+const actions = {
+
+    tourism:
+        () => {
+            openPageSection("tourism-section");
+            loadTourism();
+        },
+
+    businesses:
+        () => {
+            openPageSection("businesses-section");
+            loadBusinesses();
+        },
+
+    products:
+        () => {
+            openPageSection("products-section");
+            loadProducts();
+        },
+
+    projects:
+        () => {
+            openPageSection("projects");
+            loadProjects();
+        },
+
+    portfolio:
+        () => openPortfolio(),
+
+    services:
+        () => openPageSection("services"),
+
+    contact:
+        () => openExternalPage("contact.html"),
+
+    about:
+        () => openExternalPage("about.html"),
+
+    search:
+        () => focusSearch(),
+
+    top:
+        () => window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
+
+};
