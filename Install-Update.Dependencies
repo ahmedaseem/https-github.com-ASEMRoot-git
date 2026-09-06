@@ -1,0 +1,5 @@
+npm install
+# Ensure you have these packages:
+# - express (for routing)
+# - pg (for PostgreSQL)
+# - body-parser (for JSON parsing)

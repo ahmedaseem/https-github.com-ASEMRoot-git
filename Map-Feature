@@ -1,0 +1,11 @@
+# Find nearby locations (all types)
+curl "http://localhost:3000/api/nearby?latitude=40.7580&longitude=-73.9855&radiusKm=5"
+
+# Find nearby businesses only
+curl "http://localhost:3000/api/nearby/businesses?latitude=40.7580&longitude=-73.9855&radiusKm=10"
+
+# Find nearby tourism locations
+curl "http://localhost:3000/api/nearby/tourism?latitude=40.7829&longitude=-73.9654&radiusKm=2"
+
+# With custom limit
+curl "http://localhost:3000/api/nearby?latitude=40.7580&longitude=-73.9855&radiusKm=25&limit=50&type=all"

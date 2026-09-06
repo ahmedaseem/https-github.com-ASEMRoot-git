@@ -1,0 +1,17 @@
+import { Processor, WorkerHost } from '@nestjs/bullmq';
+import { Job } from 'bullmq';
+
+@Processor('location')
+export class LocationProcessor extends WorkerHost {
+  async process(job: Job) {
+    if (job.name === 'process-location') {
+      console.log('Processing location:', job.data);
+
+      // هنا نضع معالجة الموقع أو الحفظ في SQLite/PostgreSQL
+      return {
+        success: true,
+        processedAt: new Date().toISOString(),
+      };
+    }
+  }
+}

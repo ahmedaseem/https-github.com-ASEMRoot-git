@@ -1,13 +1,25 @@
 import { Module } from '@nestjs/common';
-import { TestApiModule } from './test-api/test-api.module.js';
-import { LocationModule } from './location/location.module.js';
-import { AiModule } from './ai/ai.module.js';
+import { BullModule } from '@nestjs/bullmq';
+
+import { SEARCH_QUEUE } from './search.queue.js';
+import { SearchProcessor } from './search.processor.js';
+import { SearchQueueService } from './search.service.js';
 
 @Module({
   imports: [
-    TestApiModule,
-    LocationModule,
-    AiModule,
+    BullModule.forRoot({
+      connection: {
+        host: '127.0.0.1',
+        port: 6379,
+      },
+    }),
+
+    BullModule.registerQueue({
+      name: SEARCH_QUEUE,
+    }),
   ],
+
+  providers: [SearchProcessor, SearchQueueService],
+  exports: [SearchQueueService],
 })
 export class AppModule {}

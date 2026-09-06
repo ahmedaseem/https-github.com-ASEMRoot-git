@@ -31,7 +31,4 @@ function normalizeArray(data) {
         ) {
             return data[key];
         }
-    }
-
-    return [];
-}
+    

@@ -1,0 +1,6 @@
+{
+  "success": boolean,
+  "data": array,
+  "count": number,
+  "message": string (on error)
+}

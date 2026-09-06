@@ -1,0 +1,8 @@
+# Basic search
+curl "http://localhost:3000/api/search?q=coffee"
+
+# Search with filters
+curl "http://localhost:3000/api/search?q=cafe&type=business&limit=10"
+
+# Search with offset (pagination)
+curl "http://localhost:3000/api/search?q=shop&limit=5&offset=0"

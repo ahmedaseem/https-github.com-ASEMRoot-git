@@ -1,0 +1,362 @@
+import {
+  Controller,
+  Get,
+  OnModuleDestroy,
+  Query,
+} from '@nestjs/common';
+import sqlite3 from 'sqlite3';
+
+type QueryValue = string | number | boolean | null;
+type ApiQuery = {
+  page?: string;
+  limit?: string;
+  search?: string;
+};
+
+type NearbyQuery = {
+  lat?: string;
+  lon?: string;
+  radiusKm?: string;
+  type?: string;
+};
+@Controller()
+export class TestApiController implements OnModuleDestroy {
+  private readonly db: sqlite3.Database;
+
+  constructor() {
+    const databasePath =
+      process.env.DATABASE_PATH ||
+      '/root/my-site-app/instance/asem.db';
+
+    this.db = new sqlite3.Database(databasePath);
+  }
+
+  private all<T>(
+    sql: string,
+    params: QueryValue[] = [],
+  ): Promise<T[]> {
+    return new Promise((resolve, reject) => {
+      this.db.all(sql, params, (error, rows) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve((rows || []) as T[]);
+        }
+      });
+    });
+  }
+
+  private pagination(query: ApiQuery) {
+    const page = Math.max(Number(query.page) || 1, 1);
+    const limit = Math.min(Math.max(Number(query.limit) || 20, 1), 100);
+    const offset = (page - 1) * limit;
+
+    return { page, limit, offset };
+  }
+
+  @Get('countries')
+  async countries() {
+    const rows = await this.all(
+      `SELECT *
+       FROM countries
+       WHERE is_active = 1
+       ORDER BY name ASC`,
+    );
+
+    return {
+      status: 'ok',
+      service: 'countries',
+      mode: 'live',
+      data: rows,
+    };
+  }
+
+  @Get('cities')
+  async cities(@Query() query: ApiQuery) {
+    const { page, limit, offset } = this.pagination(query);
+    const search = typeof query.search === 'string'
+      ? query.search.trim()
+      : '';
+
+    const rows = await this.all(
+      `SELECT *
+       FROM cities
+       WHERE is_active = 1
+       AND name LIKE ?
+       ORDER BY name ASC
+       LIMIT ? OFFSET ?`,
+      [`%${search}%`, limit, offset],
+    );
+
+    return {
+      status: 'ok',
+      service: 'cities',
+      mode: 'live',
+      data: rows,
+      pagination: {
+        page,
+        limit,
+        returned: rows.length,
+      },
+    };
+  }
+
+  @Get('businesses')
+  async businesses(@Query() query: ApiQuery) {
+    const { page, limit, offset } = this.pagination(query);
+
+    const rows = await this.all(
+      `SELECT *
+       FROM businesses
+       WHERE is_active = 1
+       ORDER BY id DESC
+       LIMIT ? OFFSET ?`,
+      [limit, offset],
+    );
+
+    return {
+      status: 'ok',
+      service: 'businesses',
+      mode: 'live',
+      data: rows,
+      pagination: {
+        page,
+        limit,
+        returned: rows.length,
+      },
+    };
+  }
+
+  @Get('products')
+  async products(@Query() query: ApiQuery) {
+    const { page, limit, offset } = this.pagination(query);
+
+    const rows = await this.all(
+      `SELECT *
+       FROM products
+       WHERE is_active = 1
+       ORDER BY id DESC
+       LIMIT ? OFFSET ?`,
+      [limit, offset],
+    );
+
+    return {
+      status: 'ok',
+      service: 'products',
+      mode: 'live',
+      data: rows,
+      pagination: {
+        page,
+        limit,
+        returned: rows.length,
+      },
+    };
+  }
+
+  @Get('tourism')
+  async tourism(@Query() query: ApiQuery) {
+    const { page, limit, offset } = this.pagination(query);
+
+    const rows = await this.all(
+      `SELECT *
+       FROM tourism
+       WHERE is_active = 1
+       ORDER BY id DESC
+       LIMIT ? OFFSET ?`,
+      [limit, offset],
+    );
+
+    return {
+      status: 'ok',
+      service: 'tourism',
+      mode: 'live',
+      data: rows,
+      pagination: {
+        page,
+        limit,
+        returned: rows.length,
+      },
+    };
+  }
+
+  @Get('nearby')
+  async nearby(@Query() query: NearbyQuery) {
+    const latitude = Number(query.lat);
+    const longitude = Number(query.lon);
+
+    if (
+      !Number.isFinite(latitude) ||
+      !Number.isFinite(longitude) ||
+      latitude < -90 ||
+      latitude > 90 ||
+      longitude < -180 ||
+      longitude > 180
+    ) {
+      return {
+        status: 'error',
+        service: 'nearby',
+        error: 'Valid lat and lon are required.',
+        data: [],
+      };
+    }
+
+    const radiusValue = Number(query.radiusKm);
+    const radiusKm = Number.isFinite(radiusValue)
+      ? Math.min(Math.max(radiusValue, 0.1), 200)
+      : 25;
+
+    const type = String(query.type || 'all').trim().toLowerCase();
+
+    const results: any[] = [];
+
+    if (type === 'all' || type === 'tourism') {
+      const tourismRows = await this.all<any>(
+        `SELECT
+           id,
+           name,
+           description,
+           category,
+           address,
+           image,
+           rating,
+           latitude,
+           longitude,
+           'tourism' AS type,
+           (
+             6371 * acos(
+               cos(radians(?)) *
+               cos(radians(latitude)) *
+               cos(radians(longitude) - radians(?)) +
+               sin(radians(?)) *
+               sin(radians(latitude))
+             )
+           ) AS distance_km
+         FROM tourism
+         WHERE is_active = 1
+           AND latitude IS NOT NULL
+           AND longitude IS NOT NULL
+         HAVING distance_km <= ?
+         ORDER BY distance_km ASC
+         LIMIT 200`,
+        [latitude, longitude, latitude, radiusKm],
+      );
+
+      results.push(...tourismRows);
+    }
+
+    if (type === 'all' || type === 'business' || type === 'businesses') {
+      const businessRows = await this.all<any>(
+        `SELECT
+           b.id,
+           b.name,
+           b.description,
+           b.category,
+           b.address,
+           b.logo,
+           b.cover_image,
+           b.rating,
+           c.latitude,
+           c.longitude,
+           'business' AS type,
+           (
+             6371 * acos(
+               cos(radians(?)) *
+               cos(radians(c.latitude)) *
+               cos(radians(c.longitude) - radians(?)) +
+               sin(radians(?)) *
+               sin(radians(c.latitude))
+             )
+           ) AS distance_km
+         FROM businesses b
+         JOIN cities c ON c.id = b.city_id
+         WHERE b.is_active = 1
+           AND c.is_active = 1
+           AND c.latitude IS NOT NULL
+           AND c.longitude IS NOT NULL
+         HAVING distance_km <= ?
+         ORDER BY distance_km ASC
+         LIMIT 200`,
+        [latitude, longitude, latitude, radiusKm],
+      );
+
+      results.push(...businessRows);
+    }
+
+    if (type === 'all' || type === 'product' || type === 'products') {
+      const productRows = await this.all<any>(
+        `SELECT
+           p.id,
+           p.name,
+           p.description,
+           p.category,
+           p.price,
+           p.currency,
+           p.image,
+           b.city_id,
+           c.latitude,
+           c.longitude,
+           'product' AS type,
+           (
+             6371 * acos(
+               cos(radians(?)) *
+               cos(radians(c.latitude)) *
+               cos(radians(c.longitude) - radians(?)) +
+               sin(radians(?)) *
+               sin(radians(c.latitude))
+             )
+           ) AS distance_km
+         FROM products p
+         JOIN businesses b ON b.id = p.business_id
+         JOIN cities c ON c.id = b.city_id
+         WHERE p.is_active = 1
+           AND p.is_available = 1
+           AND b.is_active = 1
+           AND c.is_active = 1
+           AND c.latitude IS NOT NULL
+           AND c.longitude IS NOT NULL
+         HAVING distance_km <= ?
+         ORDER BY distance_km ASC
+         LIMIT 200`,
+        [latitude, longitude, latitude, radiusKm],
+      );
+
+      results.push(...productRows);
+    }
+
+    results.sort(
+      (a, b) => Number(a.distance_km) - Number(b.distance_km),
+    );
+
+    return results.slice(0, 200);
+  }
+
+  @Get('projects')
+  async projects(@Query() query: ApiQuery) {
+    const { page, limit, offset } = this.pagination(query);
+
+    const rows = await this.all(
+      `SELECT *
+       FROM projects
+       WHERE is_active = 1
+       ORDER BY id DESC
+       LIMIT ? OFFSET ?`,
+      [limit, offset],
+    );
+
+    return {
+      status: 'ok',
+      service: 'projects',
+      mode: 'live',
+      data: rows,
+      pagination: {
+        page,
+        limit,
+        returned: rows.length,
+      },
+    };
+  }
+
+  onModuleDestroy() {
+    this.db.close();
+  }
+}

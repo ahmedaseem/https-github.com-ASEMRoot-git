@@ -1,0 +1,11 @@
+const searchController = require('./search.controller');
+const nearbyController = require('./nearby.controller');
+
+// Search endpoints
+app.get('/api/search', searchController.globalSearch);
+app.get('/api/search/suggestions', searchController.getSearchSuggestions);
+
+// Nearby/Map endpoints
+app.get('/api/nearby', nearbyController.findNearby);
+app.get('/api/nearby/businesses', nearbyController.findNearbyBusinesses);
+app.get('/api/nearby/tourism', nearbyController.findNearbyTourism);

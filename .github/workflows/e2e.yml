@@ -1,0 +1,81 @@
+name: E2E / Build & Runtime Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - cleanup/organize-files
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install root dependencies
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm i; fi
+
+      - name: Start backend server (server.js.before-fix)
+        run: |
+          # Start the more complete server implementation in background
+          node server.js.before-fix > backend.log 2>&1 &
+          echo $! > backend.pid
+
+      - name: Wait for backend on port 3000
+        run: |
+          for i in {1..30}; do
+            if curl -sSf http://127.0.0.1:3000/api/health >/dev/null 2>&1; then
+              echo "Backend is up"; break
+            fi
+            echo "Waiting for backend... ($i)"; sleep 1
+          done
+
+      - name: Backend health check
+        run: |
+          curl -sSf http://127.0.0.1:3000/api/health | jq -r '.'
+
+      - name: Test API endpoints
+        run: |
+          set -e
+          echo "GET /api/tourism"
+          curl -sS http://127.0.0.1:3000/api/tourism | jq -r '.' || true
+          echo "GET /api/businesses"
+          curl -sS http://127.0.0.1:3000/api/businesses | jq -r '.' || true
+          echo "GET /api/products"
+          curl -sS http://127.0.0.1:3000/api/products | jq -r '.' || true
+
+      - name: Serve frontend (simple static server)
+        run: |
+          npx http-server -p 8080 . > frontend.log 2>&1 &
+          echo $! > frontend.pid
+          sleep 1
+
+      - name: Frontend load check
+        run: |
+          curl -sSf http://127.0.0.1:8080/index.html | head -n 5
+
+      - name: Frontend -> Backend request (via frontend host)
+        run: |
+          # Test the frontend can reach the backend API URL used by the app (directly calling the API as the frontend would)
+          curl -sSf "http://127.0.0.1:3000/api/location" | jq -r '.' || true
+
+      - name: Collect logs
+        if: failure()
+        run: |
+          echo "---- backend.log ----"
+          cat backend.log || true
+          echo "---- frontend.log ----"
+          cat frontend.log || true
+
+      - name: Teardown
+        if: always()
+        run: |
+          if [ -f backend.pid ]; then kill "$(cat backend.pid)" || true; fi
+          if [ -f frontend.pid ]; then kill "$(cat frontend.pid)" || true; fi

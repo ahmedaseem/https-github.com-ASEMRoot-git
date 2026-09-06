@@ -69,14 +69,11 @@ async function activateGPS() {
 
             try {
 
-                const params =
-                    new URLSearchParams({
-                        lat,
-                        lon: longitude,
-                        radiusKm: radius,
-                        type
-                    });
-
+                const engine = require("./engine/memory.adapter");
+exports.globalSearch = async(query) => {
+    const results = await engine.search(query.q);
+    return { results, total: results.length };
+};
 
                 const response =
                     await fetch(
